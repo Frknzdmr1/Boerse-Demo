@@ -1,0 +1,26 @@
+*.iml
+
+## boerse-frontend ##
+/boerse-frontend/logs
+/boerse-frontend/*.log
+/boerse-frontend/npm-debug.log*
+/boerse-frontend/yarn-debug.log*
+/boerse-frontend/yarn-error.log*
+/boerse-frontend/pnpm-debug.log*
+/boerse-frontend/lerna-debug.log*
+
+/boerse-frontend/node_modules
+/boerse-frontend/dist
+/boerse-frontend/dist-ssr
+/boerse-frontend/*.local
+
+
+
+
+## boerse-backend ##
+/boerse-backend/.mvn
+/boerse-backend/mvnw
+/boerse-backend/mvnw.cmd
+/boerse-backend/HELP.md
+/boerse-backend/.gitignore
+/boerse-backend/target
