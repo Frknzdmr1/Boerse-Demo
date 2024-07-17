@@ -9,5 +9,4 @@ public class BoerseBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BoerseBackendApplication.class, args);
 	}
-
 }
