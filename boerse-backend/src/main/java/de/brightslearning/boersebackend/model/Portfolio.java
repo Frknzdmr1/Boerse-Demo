@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -18,16 +17,16 @@ import java.util.UUID;
 @Table(name = "portfolios")
 public class Portfolio {
 
-    //@OneToMany(mappedBy = "portfolio_aktien")
-//    List<PortfolioAktie> portfolioAktien;
+    @OneToMany(mappedBy = "portfolio_aktien")
+    List<PortfolioAktie> portfolioAktien;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "benutzer_id")
+    @Column(name = "benutzer_id", nullable = false)
     private UUID benutzer_id;
 
     @Column(name = "erstellt_am")
@@ -36,9 +35,9 @@ public class Portfolio {
     @Column(name = "aktualisiert_am")
     private ZonedDateTime aktualisiertAm;
 
-//    @ManyToOne
-//    @JoinColumn(name = "benutzer")
-//    private Benutzer benutzer;
+    @ManyToOne
+    @JoinColumn(name = "benutzer")
+    private Benutzer benutzer;
 
 
     public Portfolio(UUID id, UUID benutzer_id, ZonedDateTime erstelltAm){

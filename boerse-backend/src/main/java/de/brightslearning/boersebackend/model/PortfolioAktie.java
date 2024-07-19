@@ -14,13 +14,13 @@ public class PortfolioAktie {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //@ManyToOne
-    //@JoinColumn(name = "portfolio_id", nullable = false)
-    //private Portfolio portfolio;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id", nullable = false)
+    private Portfolio portfolio;
 
-    //@ManyToOne
-    //@JoinColumn(name = "aktie_id", nullable = false)
-    //private Aktie aktie;
+    @ManyToOne
+    @JoinColumn(name = "aktie_id", nullable = false)
+    private Aktie aktie;
 
     @Column(nullable = false)
     private Integer menge;

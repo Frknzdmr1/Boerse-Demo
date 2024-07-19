@@ -1,7 +1,6 @@
 package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,29 +16,28 @@ import java.util.UUID;
 @Table(name = "aktien")
 public class Aktie {
 
-//    // Welche von denen brauchen wir hier?
-//    @OneToMany(mappedBy = "portfolio_aktien")
-//    List<PortfolioAktie> portfolioAktien;
-//
-//    // Welche von denen brauchen wir hier?
-//    @OneToMany(mappedBy = "transaktionen")
-//    List<Transaktion> transaktionen;
-//
-//    // Welche von denen brauchen wir hier?
-//    @OneToMany( mappedBy = "beobachtungslisten_aktie")
-//    List<BeobachtunsListenAktie> beobachtunsListenAktien;
+    // Welche von denen brauchen wir hier?
+    @OneToMany(mappedBy = "portfolio_aktien")
+    List<PortfolioAktie> portfolioAktien;
+
+    // Welche von denen brauchen wir hier?
+    @OneToMany(mappedBy = "transaktionen")
+    List<Transaktion> transaktionen;
+
+    // Welche von denen brauchen wir hier?
+    @OneToMany( mappedBy = "beobachtungslisten_aktie")
+    List<BeobachtungslisteAktie> beobachtungsListeAktien;
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @NotNull
-    @Column(name = "symbol")
+    @Column(name = "symbol", nullable = false)
     private String symbol;
 
-    @NotNull
-    @Column(name = "firmenname")
+    @Column(name = "firmenname", nullable = false)
     private String firmenname;
 
     @Column(name = "markt")
