@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "auftraege")
-public class Auftraege {
+public class Auftrag {
 
     @Setter
     @Getter
@@ -45,11 +45,11 @@ public class Auftraege {
 
     // Constructors
 
-    public Auftraege() {
+    public Auftrag() {
 
     }
 
-    public Auftraege(UUID id, Benutzer benutzer, UUID aktieId, String auftragstyp, Integer menge, BigDecimal preis, String status, ZonedDateTime erstelltAm, ZonedDateTime aktualisiertAm) {
+    public Auftrag(UUID id, Benutzer benutzer, UUID aktieId, String auftragstyp, Integer menge, BigDecimal preis, String status, ZonedDateTime erstelltAm, ZonedDateTime aktualisiertAm) {
         this.id = id;
         this.benutzer = benutzer;
         this.aktieId = aktieId;
@@ -61,6 +61,16 @@ public class Auftraege {
         this.aktualisiertAm = aktualisiertAm;
     }
 
+    public Auftrag(Benutzer benutzer, UUID aktieId, String auftragstyp, Integer menge, BigDecimal preis, String status, ZonedDateTime erstelltAm, ZonedDateTime aktualisiertAm) {
+        this.benutzer = benutzer;
+        this.aktieId = aktieId;
+        this.auftragstyp = auftragstyp;
+        this.menge = menge;
+        this.preis = preis;
+        this.status = status;
+        this.erstelltAm = erstelltAm;
+        this.aktualisiertAm = aktualisiertAm;
+    }
     // Getters and setters
 
     public Benutzer getBenutzer() {

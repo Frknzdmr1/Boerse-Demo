@@ -48,6 +48,20 @@ public class Benutzer {
         this.aktualisiertAm = aktualisiertAm;
     }
 
+    public Benutzer(String benutzername, String email, String passwort, String kontotyp, ZonedDateTime erstelltAm, ZonedDateTime aktualisiertAm) {
+        this.benutzername = benutzername;
+        this.email = email;
+        this.passwort = passwort;
+        this.kontotyp = kontotyp;
+        this.erstelltAm = erstelltAm;
+        this.aktualisiertAm = aktualisiertAm;
+    }
+
+    public Benutzer(String benutzername, String email, String passwort){
+        this.benutzername = benutzername;
+        this.email = email;
+        this.passwort = passwort;
+    }
     // Getters and setters
 
     public UUID getId() {
