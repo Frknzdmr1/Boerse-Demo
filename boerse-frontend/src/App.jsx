@@ -6,6 +6,10 @@ function App() {
     return (
         <>
             <p>Hello World</p>
+            <Navbar />
+            <Seitenhauptteil />
+            <Footer />
+
         </>
     )
 }
