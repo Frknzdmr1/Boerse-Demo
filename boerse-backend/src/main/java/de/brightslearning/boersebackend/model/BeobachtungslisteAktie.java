@@ -16,13 +16,13 @@ public class BeobachtungslisteAktie {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //@ManyToOne
-    //@JoinColumn(name = "beobachtungsliste_id", nullable = false)
-    //private Beobachtungsliste beobachtungsliste;
+    @ManyToOne
+    @JoinColumn(name = "beobachtungsliste_id", nullable = false)
+    private Beobachtungsliste beobachtungsliste;
 
-    //@ManyToOne
-    //@JoinColumn(name = "aktie_id", nullable = false)
-    //private Aktie aktie;
+    @ManyToOne
+    @JoinColumn(name = "aktie_id", nullable = false)
+    private Aktie aktie;
 
     @Column(name = "hinzugefuegt_am")
     private ZonedDateTime hinzugefuegtAm;
