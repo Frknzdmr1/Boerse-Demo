@@ -1,6 +1,7 @@
 package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,45 +10,32 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "beobachtungslisten")
+@Data
 public class Beobachtungsliste {
-    @Getter
-    @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @Setter
-    @Getter
-    @Column(name = "benutzer_id", nullable = false)
-    private UUID benutzerId;
+    @ManyToOne
+    @JoinColumn(name = "benutzer_id", nullable = false)
+    private Benutzer benutzer;
 
-    @Column(name = "name", nullable = false)
-    @Setter
-    @Getter
+    @Column(nullable = false)
     private String name;
-    @Column(name = "erstellt_am", nullable = false)
-    @Setter
-    @Getter
+
+    @Column(name = "erstellt_am")
     private ZonedDateTime erstelltAm;
+
     @Column(name = "aktualisiert_am")
-    @Setter
-    @Getter
     private ZonedDateTime aktualisiertAm;
 
-    // Constructors
-    public Beobachtungsliste() {
+    @PrePersist
+    protected void onCreate() {
+        erstelltAm = ZonedDateTime.now();
     }
 
-    public Beobachtungsliste(UUID benutzerId, String name, ZonedDateTime erstelltAm) {
-        this.benutzerId = benutzerId;
-        this.name = name;
-        this.erstelltAm = erstelltAm;
+    @PreUpdate
+    protected void onUpdate() {
+        aktualisiertAm = ZonedDateTime.now();
     }
-       public Beobachtungsliste(String name, ZonedDateTime erstelltAm) {
-        this.name = name;
-        this.erstelltAm = erstelltAm;
-    }
-
-
 }
-

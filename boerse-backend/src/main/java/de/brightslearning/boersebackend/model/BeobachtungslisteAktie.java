@@ -1,19 +1,17 @@
 package de.brightslearning.boersebackend.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "beobachtungsliste_aktie")
+@Table(name = "beobachtungslisten_aktien")
 @Data
 public class BeobachtungslisteAktie {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
@@ -32,3 +30,4 @@ public class BeobachtungslisteAktie {
         hinzugefuegtAm = ZonedDateTime.now();
     }
 }
+
