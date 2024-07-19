@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "transaktionen")
-public class Transaktionen {
+public class Transaktion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -49,12 +49,12 @@ public class Transaktionen {
 
 
     // Constructors
-    public Transaktionen() {
+    public Transaktion() {
 
     }
 
-    public Transaktionen(Auftrag auftrag, Benutzer benutzer, UUID aktieId, String transaktionstyp,
-                         Integer menge, BigDecimal preis, ZonedDateTime zeitstempel) {
+    public Transaktion(Auftrag auftrag, Benutzer benutzer, UUID aktieId, String transaktionstyp,
+                       Integer menge, BigDecimal preis, ZonedDateTime zeitstempel) {
         this.auftrag = auftrag;
         this.benutzer = benutzer;
         this.aktieId = aktieId;

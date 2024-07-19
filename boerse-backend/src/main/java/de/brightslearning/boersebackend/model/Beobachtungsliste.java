@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "beobachtungslisten")
-public class Beobachtungslisten {
+public class Beobachtungsliste {
     @Getter
     @Setter
     @Id
@@ -35,15 +35,15 @@ public class Beobachtungslisten {
     private ZonedDateTime aktualisiertAm;
 
     // Constructors
-    public Beobachtungslisten() {
+    public Beobachtungsliste() {
     }
 
-    public Beobachtungslisten(UUID benutzerId, String name, ZonedDateTime erstelltAm) {
+    public Beobachtungsliste(UUID benutzerId, String name, ZonedDateTime erstelltAm) {
         this.benutzerId = benutzerId;
         this.name = name;
         this.erstelltAm = erstelltAm;
     }
-       public Beobachtungslisten(String name, ZonedDateTime erstelltAm) {
+       public Beobachtungsliste(String name, ZonedDateTime erstelltAm) {
         this.name = name;
         this.erstelltAm = erstelltAm;
     }
