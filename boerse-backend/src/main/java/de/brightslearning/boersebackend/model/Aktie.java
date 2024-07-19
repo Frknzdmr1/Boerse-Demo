@@ -1,4 +1,4 @@
-package model;
+package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
