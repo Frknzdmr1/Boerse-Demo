@@ -1,6 +1,7 @@
 package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,59 +11,39 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "transaktionen")
+@Data
 public class Transaktion {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "auftrag_id", nullable = false)
-     private Auftrag auftrag;
+    private Auftrag auftrag;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "benutzer_id", nullable = false)
     private Benutzer benutzer;
 
-    @Column(name = "aktie_id", nullable = false)
-    private UUID aktieId;
+    @ManyToOne
+    @JoinColumn(name = "aktie_id", nullable = false)
+    private Aktie aktie;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "transaktionstyp", nullable = false)
-    @Setter
-    @Getter
-    private String transaktionstyp;
+    private Transaktionstyp transaktionstyp;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Integer menge;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    @Setter
-    @Getter
+    @Column(nullable = false)
     private BigDecimal preis;
 
-    @Column(name = "zeitstempel", nullable = false)
-    @Setter
-    @Getter
+    @Column(name = "zeitstempel")
     private ZonedDateTime zeitstempel;
 
-
-    // Constructors
-    public Transaktion() {
-
+    @PrePersist
+    protected void onCreate() {
+        zeitstempel = ZonedDateTime.now();
     }
-
-    public Transaktion(Auftrag auftrag, Benutzer benutzer, UUID aktieId, String transaktionstyp,
-                       Integer menge, BigDecimal preis, ZonedDateTime zeitstempel) {
-        this.auftrag = auftrag;
-        this.benutzer = benutzer;
-        this.aktieId = aktieId;
-        this.transaktionstyp = transaktionstyp;
-        this.menge = menge;
-        this.preis = preis;
-        this.zeitstempel = zeitstempel;
-    }
-
-
 }
