@@ -16,10 +16,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/aktie/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/h2-console/**")
+                        .ignoringRequestMatchers("/aktie/**")
                 )
                 .headers(headers -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin
