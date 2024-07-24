@@ -29,7 +29,7 @@ public class WebSecurityConfiguration {
         // Definiere die Landingpage nach dem Logout:
         http.logout(l -> l.logoutSuccessUrl("/"));
 
-        //Request Matcher für die Handhabung der Nutzerberechtigung.
+        //Request Matcher für die Handhabung der Nutzerberechtigungen.
         http.authorizeHttpRequests( authorizations ->
                 authorizations
                 .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**").permitAll()
