@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,13 +30,14 @@ public class WebSecurityConfiguration {
         http.logout(l -> l.logoutSuccessUrl("/"));
 
         //Request Matcher für die Handhabung der Nutzerberechtigung.
-        http.authorizeHttpRequests((authz) -> authz
+        http.authorizeHttpRequests( authorizations ->
+                authorizations
                 .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**").permitAll()
                 .anyRequest().authenticated());
 
 
         // Ermöglicht H2-DB support.
-        http.csrf(csrf -> csrf.disable()).headers(headers -> headers.disable());
+        http.csrf(AbstractHttpConfigurer::disable).headers(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
