@@ -22,21 +22,19 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // provide default login - see https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html for adaptions
+        // Zeige den default logIn an: - siehe https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html for adaptions
         http.formLogin(withDefaults());
 
-        // configure the logout behaviour: back to root url!
+        // Definiere die Landingpage nach dem Logout:
         http.logout(l -> l.logoutSuccessUrl("/"));
 
-        // use requestMatchers since Spring Security 6
-        // see: https://docs.spring.io/spring-security/reference/5.8/migration/servlet/config.html
+        //Request Matcher für die Handhabung der Nutzerberechtigung.
         http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/delete/*").hasAuthority("DELETE_LINK")
-                .requestMatchers("/", "/register", "/h2-console/**").permitAll()
+                .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**").permitAll()
                 .anyRequest().authenticated());
 
 
-        // enable h2-console support
+        // Ermöglicht H2-DB support.
         http.csrf(csrf -> csrf.disable()).headers(headers -> headers.disable());
 
         return http.build();
