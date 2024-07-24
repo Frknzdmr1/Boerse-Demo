@@ -26,74 +26,8 @@ const Search = ({}: SearchProps) => {
                     <Icon className="fill-theme-tertiary" name="search" />
                 </div>
             </div>
-            <div className="pt-3 pb-6 border-t border-theme-stroke">
-                <div className="mb-3">
-                    <div className="px-8 py-3 text-caption-1 text-theme-secondary md:px-4">
-                        Trending assets
-                    </div>
-                    <div className="px-4 md:px-2">
-                        {trendingAssets.map((asset) => (
-                            <Asset item={asset} key={asset.id} />
-                        ))}
-                    </div>
-                </div>
-                <div className="">
-                    <div className="px-8 py-3 text-caption-1 text-theme-secondary md:px-4">
-                        Recent transactions
-                    </div>
-                    <div className="px-4 md:px-2">
-                        {recentTransactions.map((transaction) => (
-                            <Transaction
-                                item={transaction}
-                                key={transaction.id}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className="flex items-center px-8 py-4 space-x-6 bg-theme-n-8 md:p-4">
-                <div className="mr-auto text-caption-1 text-theme-secondary">
-                    Showing 10 of 1000 results
-                </div>
-                <div className="flex items-center md:hidden">
-                    <div className="mr-3 text-caption-1 text-theme-secondary">
-                        Navigate
-                    </div>
-                    <div className="flex space-x-1">
-                        <div className="flex justify-center items-center w-8 h-7 rounded-lg bg-theme-surface-pure border border-theme-stroke text-0">
-                            <Icon
-                                className="!w-4 !h-4 fill-theme-primary"
-                                name="arrow-bottom"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-8 h-7 rounded-lg bg-theme-surface-pure border border-theme-stroke text-0">
-                            <Icon
-                                className="!w-4 !h-4 fill-theme-primary"
-                                name="arrow-top"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex items-center md:hidden">
-                    <div className="mr-3 text-caption-1 text-theme-secondary">
-                        Select
-                    </div>
-                    <div className="flex justify-center items-center w-10 h-7 rounded-lg bg-theme-surface-pure border border-theme-stroke text-0">
-                        <Icon
-                            className="fill-theme-primary"
-                            name="arrow-select"
-                        />
-                    </div>
-                </div>
-                <div className="flex items-center md:hidden">
-                    <div className="mr-3 text-caption-1 text-theme-secondary">
-                        Close
-                    </div>
-                    <button className="group w-10 h-7 pt-0.5 rounded-lg bg-theme-surface-pure border border-theme-stroke text-caption-2">
-                        ESC
-                    </button>
-                </div>
-            </div>
+
+
         </>
     );
 };
