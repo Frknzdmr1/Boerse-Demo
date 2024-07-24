@@ -1,13 +1,9 @@
 import { useState } from "react";
 import Icon from "@/components/Icon";
-import Asset from "./Asset";
-import Transaction from "./Transaction";
 
-import { trendingAssets, recentTransactions } from "@/mocks/search";
+//type SearchProps = {};
 
-type SearchProps = {};
-
-const Search = ({}: SearchProps) => {
+const Search = () => {
     const [search, setSearch] = useState("");
 
     return (
