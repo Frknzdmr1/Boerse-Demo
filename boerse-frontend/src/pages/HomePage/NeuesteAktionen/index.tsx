@@ -1,11 +1,11 @@
 import Card from "@/components/Card";
 import Icon from "@/components/Icon";
 
-import { recentActivities } from "@/mocks/recentActivities";
+import { neuesteAktionen } from "@/mocks/neuesteAktionen";
 
 //type RecentActivitiesProps = {};
 
-const RecentActivities = () => {
+const NeuesteAktionen = () => {
     return (
         <Card
             className="w-[calc(50%-0.5rem)] mx-1 lg:w-full lg:mx-0"
@@ -14,7 +14,7 @@ const RecentActivities = () => {
             seeAllUrl="/"
         >
             <div className="pt-6 space-y-1">
-                {recentActivities.map((item) => (
+                {neuesteAktionen.map((item) => (
                     <div className="flex items-center py-4" key={item.id}>
                         <div
                             className={`flex justify-center items-center shrink-0 w-10 h-12 mr-4 rounded-[0.625rem] md:mr-3 ${
@@ -64,4 +64,4 @@ const RecentActivities = () => {
     );
 };
 
-export default RecentActivities;
+export default NeuesteAktionen;

@@ -60,10 +60,10 @@ const Meldungen = () => {
                                 </div>
                                 <div className="grow pl-4">
                                     <div className="notification text-caption-1 text-theme-secondary">
-                                        {meldungen.content}
+                                        {meldung.content}
                                     </div>
                                     <div className="mt-2 text-caption-2m text-theme-secondary">
-                                        {meldungen.time}
+                                        {meldung.time}
                                     </div>
                                 </div>
                             </div>

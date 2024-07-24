@@ -1,9 +1,9 @@
 import './App.css'
-import HomePage from "@/templates/HomePage";
+import HomePage from "@/pages/HomePage";
 import {Route, Routes} from "react-router-dom";
 //import Layout from "@/components/Layout";
-import MyAssetsPage from "@/templates/MyAssetsPage";
-import AssetPage from "@/templates/TokenPage";
+//import MyAssetsPage from "@/pages/MyAssetsPage";
+//import AssetPage from "@/pages/TokenPage";
 import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
@@ -19,22 +19,7 @@ function App() {
 
                         }
                     />
-                    <Route
-                        path="my-assets"
-                        element={
-                            <div title="My Assets">
-                                <MyAssetsPage />
-                            </div>
-                        }
-                    />
-                    <Route
-                        path="token"
-                        element={
-                            <div title="Tokens">
-                                <AssetPage />
-                            </div>
-                        }
-                    />
+
                 </Route>
             </Routes>
         </ChakraProvider>

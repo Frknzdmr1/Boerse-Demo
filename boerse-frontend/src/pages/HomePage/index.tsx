@@ -2,8 +2,8 @@
 
 import Layout from "@/components/Layout";
 import Balance from "./Balance";
-import TopTokens from "./TopTokens";
-import RecentActivities from "./RecentActivities";
+import TopTokens from "./TopMarken";
+import NeuesteAktionen from "./NeuesteAktionen";
 
 const HomePage = () => {
     return (
@@ -14,7 +14,7 @@ const HomePage = () => {
                     <TopTokens />
                 </div>
                 <div className="flex -mx-1 lg:block lg:mx-0 lg:space-y-2">
-                    <RecentActivities />
+                    <NeuesteAktionen />
                 </div>
             </div>
         </Layout>
