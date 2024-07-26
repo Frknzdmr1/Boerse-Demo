@@ -23,6 +23,9 @@ public class Portfolio {
     @JoinColumn(name = "benutzer_id", nullable = false)
     private Benutzer benutzer;
 
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PortfolioAktie> portfolioAktien;
+
     @Column(name = "erstellt_am")
     private ZonedDateTime erstelltAm;
 

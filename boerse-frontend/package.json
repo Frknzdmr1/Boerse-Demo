@@ -19,6 +19,7 @@
     "@react-buddy/palette-chakra-ui": "^2.3.1",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
     "framer-motion": "^11.3.12",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
