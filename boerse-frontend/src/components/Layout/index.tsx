@@ -27,8 +27,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
                     : "pl-20 md:pl-0"
             }`}
         >
-            <Sidebar
-                className={`md:transition-transform ${
+            <Sidebar className={`md:transition-transform ${
                     showMenu ? "md:translate-x-0" : "md:-translate-x-full"
                 }`}
                 visible={visible}
