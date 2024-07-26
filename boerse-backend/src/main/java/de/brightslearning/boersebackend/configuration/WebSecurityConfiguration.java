@@ -32,7 +32,7 @@ public class WebSecurityConfiguration {
         //Request Matcher für die Handhabung der Nutzerberechtigungen.
         http.authorizeHttpRequests( authorizations ->
                 authorizations
-                .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**").permitAll()
+                .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**", "/aktie/current-price/**").permitAll()
                 .anyRequest().authenticated());
 
 
