@@ -1,7 +1,11 @@
 package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +13,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "benutzer")
+@NoArgsConstructor
 @Data
+@AllArgsConstructor
 public class Benutzer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
