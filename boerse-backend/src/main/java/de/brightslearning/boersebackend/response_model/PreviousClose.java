@@ -1,8 +1,6 @@
 package de.brightslearning.boersebackend.response_model;
 
-
 import java.util.List;
-
 
 public record PreviousClose (
         String ticker,
@@ -13,7 +11,4 @@ public record PreviousClose (
         String status,
         String request_id,
         Integer count
-){
-
-
-}
+) {}

@@ -44,9 +44,11 @@ public class WebSecurityConfiguration {
         //Request Matcher für die Handhabung der Nutzerberechtigungen.
         http.authorizeHttpRequests( authorizations ->
                 authorizations
+        spring-security-login-register
                 .requestMatchers("/","/login", "/register", "/h2-console/**", "/aktie/**", "/aktie/prev/**").permitAll()
                 .anyRequest().authenticated())
                 .httpBasic(withDefaults());
+
 
 
         // Ermöglicht H2-DB support.
