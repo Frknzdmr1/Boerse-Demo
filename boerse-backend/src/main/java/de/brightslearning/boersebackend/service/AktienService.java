@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Service
@@ -34,7 +36,9 @@ public class AktienService {
     }
 
     public BigDecimal getCurrentPrice(String symbol) {
-        String date = "2013-09-01"; // Set the date dynamically as needed
+        LocalDate yesterday = LocalDate.now().minusDays(1); // Get yesterday's date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = yesterday.format(formatter);
         String url = "https://api.polygon.io/v1/open-close/" + symbol + "/" + date + "?adjusted=true&apiKey=" + polygonApiKey;
 
         OpenClose response = Objects.requireNonNull(
@@ -49,4 +53,5 @@ public class AktienService {
 
         return BigDecimal.valueOf(response.close());
     }
+
 }
