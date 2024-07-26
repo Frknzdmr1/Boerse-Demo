@@ -2,17 +2,20 @@ package de.brightslearning.boersebackend.configuration;
 
 
 import de.brightslearning.boersebackend.model.Benutzer;
+import de.brightslearning.boersebackend.model.UserRolle;
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SecurityService implements UserDetailsService {
@@ -26,15 +29,21 @@ public class SecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Benutzer user = benutzerRepository.findBenutzerByBenutzername(username);
-
-        List<GrantedAuthority> authorities = new LinkedList<>();
-        if (user.getKontotyp().equals("Admin")) {
-            authorities.add(new SimpleGrantedAuthority("DELETE_LINK"));
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getBenutzername(), user.getPasswort(), authorities
+        Benutzer benutzer = benutzerRepository.findByBenutzername(username).orElseThrow(
+                () -> new UsernameNotFoundException("Der Benutzer mit diesem Namen wurde nicht gefunden!")
         );
+
+        return new User(
+              benutzer.getBenutzername(),
+              benutzer.getPasswort(),
+              mapBenutzerRollenToAuthorities(benutzer.getUserRollen())
+        );
+    }
+
+    private Collection<GrantedAuthority> mapBenutzerRollenToAuthorities (List<UserRolle> userRollen){
+        return userRollen.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getBezeichnung()))
+                .collect(Collectors.toList());
+
     }
 }
