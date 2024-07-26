@@ -110,7 +110,8 @@ const TopTokens = () => {
 
             return {
                 id: ticker,
-                icon: `path/to/${ticker.toLowerCase()}_icon.png`, // Replace with actual icon path
+                // TODO: Pfad hinzufügen
+                icon: `path/to/${ticker.toLowerCase()}_icon.png`, // Ersetzt durch den aktuellen Icon-Pfad. Dieser Pfad kann völlig dynamisch sein
                 currencyFull: ticker,
                 currencyShort: ticker,
                 itemsCharts: itemsCharts,
