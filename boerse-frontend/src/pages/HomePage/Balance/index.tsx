@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps } from "recharts";
 import { useColorMode } from "@chakra-ui/color-mode";
+import { Input, Button, Box, Text } from '@chakra-ui/react';
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
-
-import { chartBalanceHome } from "@/mocks/charts";
 
 const duration = [
     {
@@ -53,10 +53,98 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = () => {
+const Balance = ({ userId }) => {
     const [time, setTime] = useState(duration[0]);
     const { colorMode } = useColorMode();
     const isDarkMode = colorMode === "dark";
+
+    const [chartData, setChartData] = useState<ChartData[]>([]);
+    const [portfolioValue, setPortfolioValue] = useState<number>(0);
+    const [portfolioChange, setPortfolioChange] = useState<number>(0);
+
+    const [newStockSymbol, setNewStockSymbol] = useState('');
+    const [newStockQuantity, setNewStockQuantity] = useState(0);
+    const [portfolio, setPortfolio] = useState<any[]>([]);
+
+    useEffect(() => {
+        // Fetch portfolio data
+        const fetchPortfolio = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/portfolio/${userId}`, {
+                    withCredentials: true // Ensure cookies are sent for authentication
+                });
+                const portfolio = response.data;
+
+                if (portfolio && portfolio.portfolioAktien) {
+                    // Transform portfolio data into chart data
+                    const transformedData = portfolio.portfolioAktien.map((stock: any) => ({
+                        name: stock.symbol,
+                        price: stock.aktuellerPreis
+                    }));
+
+                    setChartData(transformedData);
+
+                    // Calculate portfolio value and change
+                    const totalValue = portfolio.portfolioAktien.reduce((acc: number, stock: any) => acc + (stock.menge * stock.aktuellerPreis), 0);
+                    setPortfolioValue(totalValue);
+
+                    // Assuming you have a way to calculate the percentage change
+                    const totalInitialValue = portfolio.portfolioAktien.reduce((acc: number, stock: any) => acc + (stock.menge * stock.durchschnittlicherKaufpreis), 0);
+                    const change = totalInitialValue ? ((totalValue - totalInitialValue) / totalInitialValue) * 100 : 0;
+                    setPortfolioChange(change);
+
+                    // Set portfolio state
+                    setPortfolio(portfolio.portfolioAktien);
+                } else {
+                    console.error('Portfolio data is not in expected format', portfolio);
+                }
+            } catch (error) {
+                console.error('Error fetching portfolio data', error);
+                if (error.response) {
+                    console.error('Response data:', error.response.data);
+                }
+                if (error.request) {
+                    console.error('Request data:', error.request);
+                }
+            }
+        };
+
+        fetchPortfolio();
+    }, [userId]);
+
+    // Function to add stock to portfolio
+    const addStockToPortfolio = async () => {
+        try {
+            await axios.post(`http://localhost:8080/portfolio/${userId}/add-stock`, {
+                symbol: newStockSymbol,
+                menge: newStockQuantity,
+                durchschnittlicherKaufpreis: 0 // Adjust as necessary
+            });
+
+            // Fetch the current price of the new stock
+            const priceResponse = await axios.get(`http://localhost:8080/aktie/current-price/${newStockSymbol}`);
+            const currentPrice = priceResponse.data;
+
+            // Update chart data
+            setChartData([...chartData, { name: newStockSymbol, price: currentPrice }]);
+
+            // Update portfolio state
+            const updatedPortfolio = [...portfolio,  { symbol: newStockSymbol, aktuellerPreis: currentPrice, menge: newStockQuantity }];
+            setPortfolio(updatedPortfolio);
+
+            // Recalculate the portfolio value and change
+            const totalValue = updatedPortfolio.reduce((acc: number, stock: any) => acc + (stock.menge * stock.aktuellerPreis), 0);
+            setPortfolioValue(totalValue);
+            const totalInitialValue = updatedPortfolio.reduce((acc: number, stock: any) => acc + (stock.menge * stock.durchschnittlicherKaufpreis), 0);
+            const change = totalInitialValue ? ((totalValue - totalInitialValue) / totalInitialValue) * 100 : 0;
+            setPortfolioChange(change);
+
+            setNewStockSymbol('');
+            setNewStockQuantity(0);
+        } catch (error) {
+            console.error('Error adding stock to portfolio', error);
+        }
+    };
 
     return (
         <Card
@@ -69,17 +157,17 @@ const Balance = () => {
             <div className="flex items-end md:mt-4">
                 <CurrencyFormat
                     className="text-h1 md:text-h3"
-                    value={3200.8}
+                    value={portfolioValue}
                     currency="€"
                 />
-                <Percent className="ml-1 text-title-1s" value={85.66} />
+                <Percent className="ml-1 text-title-1s" value={portfolioChange} />
             </div>
             <div className="h-[14rem] -mb-2">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         width={730}
                         height={250}
-                        data={chartBalanceHome}
+                        data={chartData}
                         margin={{ top: 0, right: 6, left: 6, bottom: 0 }}
                     >
                         <defs>
@@ -138,6 +226,35 @@ const Balance = () => {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
+
+            {/* Form to add new stocks */}
+            <Box mt={6}>
+                <Input
+                    type="text"
+                    value={newStockSymbol}
+                    onChange={(e) => setNewStockSymbol(e.target.value.toUpperCase())}
+                    placeholder="Enter stock symbol"
+                    mb={4}
+                />
+                <Input
+                    type="number"
+                    value={newStockQuantity}
+                    onChange={(e) => setNewStockQuantity(Number(e.target.value))}
+                    placeholder="Enter quantity"
+                    mb={4}
+                />
+                <Button onClick={addStockToPortfolio} colorScheme="teal" mb={4}>Add Stock to Portfolio</Button>
+            </Box>
+
+            {/* Display the portfolio */}
+            <Box mt={6}>
+                <Text fontSize="xl" mb={4}>Portfolio</Text>
+                {portfolio.map((stock, index) => (
+                    <Box key={index} mb={2}>
+                        <Text>{stock.symbol}: {stock.menge} shares @ €{typeof stock.aktuellerPreis === 'number' ? stock.aktuellerPreis.toFixed(2) : stock.aktuellerPreis} each</Text>
+                    </Box>
+                ))}
+            </Box>
         </Card>
     );
 };

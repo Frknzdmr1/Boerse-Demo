@@ -1,32 +1,20 @@
-import './App.css'
-import HomePage from "@/pages/HomePage";
-import {Route, Routes} from "react-router-dom";
-//import Layout from "@/components/Layout";
-//import MyAssetsPage from "@/pages/MyAssetsPage";
-//import AssetPage from "@/pages/TokenPage";
-import { ChakraProvider } from '@chakra-ui/react'
-import Aktien from "@/components/Aktien";
-
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import HomePage from '@/pages/HomePage';
+import Aktien from '@/components/Aktien';
+import Portfolio from '@/components/Portfolio';
 
 function App() {
     return (
         <ChakraProvider>
             <Routes>
-                <Route path="/">
-                    <Route
-                        index
-                        element={
-
-                            <HomePage />
-
-                        }
-
-                    />
-
-                </Route>
+                <Route path="/" element={<HomePage />} />
                 <Route path="/current-price" element={<Aktien />} />
+                <Route path="/portfolio" element={<Portfolio />} />
             </Routes>
         </ChakraProvider>
-    )
+    );
 }
-export default App
+
+export default App;

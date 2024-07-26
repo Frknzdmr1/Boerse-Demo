@@ -34,7 +34,7 @@ public class AktienService {
     }
 
     public BigDecimal getCurrentPrice(String symbol) {
-        String date = "2013-09-01"; // Set the date dynamically as needed
+        String date = "2024-07-25"; // Set the date dynamically as needed
         String url = "https://api.polygon.io/v1/open-close/" + symbol + "/" + date + "?adjusted=true&apiKey=" + polygonApiKey;
 
         OpenClose response = Objects.requireNonNull(
