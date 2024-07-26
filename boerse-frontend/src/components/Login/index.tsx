@@ -25,7 +25,7 @@ export default function Login() {
 
     const hantiereVeraenderungPasswort = (event: React.FormEvent<HTMLInputElement>) => {
         setPasswort(event.currentTarget.value);
-
+    }
     return (
         <>
             <div>
@@ -59,3 +59,4 @@ export default function Login() {
         </>
     )
 }
+
