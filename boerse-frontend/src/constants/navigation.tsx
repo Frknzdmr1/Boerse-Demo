@@ -25,14 +25,14 @@ export const navigation = [
     },
     {
         id: "4",
-        title: "Help",
-        icon: "notification",
-        url: "/help",
+        title: "Hilfe",
+        icon: "support",
+        url: "/hilfe",
     },
     {
         id: "5",
-        title: "Settings",
-        icon: "settings",
-        url: "/settings",
+        title: "Aktuelles",
+        icon: "news",
+        url: "/aktuelles",
     },
 ];

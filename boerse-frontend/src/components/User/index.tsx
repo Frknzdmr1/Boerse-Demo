@@ -61,10 +61,10 @@ const User = ({ className }: UserProps) => {
                         />
                         <NavLink
                             title="Support"
-                            icon="support"
+                            icon="news"
                             url="/support"
                         />
-                        <NavLink title="Hilfe" icon="news" url="/hilfe" />
+                        <NavLink title="Hilfe" icon="support" url="/hilfe" />
                         <div className="group flex items-center h-12 px-4 rounded-xl transition-colors hover:bg-theme-on-surface-2">
                             <Icon
                                 className="shrink-0 mr-4 fill-theme-secondary transition-colors group-hover:fill-theme-primary"
