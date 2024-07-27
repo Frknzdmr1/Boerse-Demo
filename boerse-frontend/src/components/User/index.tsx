@@ -55,9 +55,9 @@ const User = ({ className }: UserProps) => {
                     </div>
                     <div className="mb-2 space-y-1">
                         <NavLink
-                            title="Einstellung"
+                            title="Einstellungen"
                             icon="settings"
-                            url="/einstellung"
+                            url="/einstellungen"
                         />
                         <NavLink
                             title="Support"
@@ -79,7 +79,7 @@ const User = ({ className }: UserProps) => {
                                 theme
                             />
                         </div>
-                        <NavLink title="News" icon="news" url="/news" />
+                        <NavLink title="Hilfe" icon="news" url="/hilfe" />
                     </div>
                     <NavLink title="Log out" icon="logout" url="/sign-up" />
                 </MenuItems>
