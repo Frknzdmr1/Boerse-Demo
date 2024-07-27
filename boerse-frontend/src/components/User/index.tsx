@@ -18,7 +18,7 @@ const User = ({ className }: UserProps) => {
             <MenuButton className="group w-12 h-12">
                 <Image
                     className="w-12 h-12 object-cover rounded-full opacity-100"
-                    src="/images/avatar.jpg"
+                    src="/images/avatar.png"
                     width={48}
                     height={48}
                     alt=""

@@ -6,7 +6,7 @@ import Modal from "@/components/Modal";
 import Trade from "@/components/Trade";
 import User from "@/components/User";
 import Image from "@/components/Image";
-import Notifications from "./Meldungen";
+import Meldungen from "./Meldungen";
 import Search from "./Search";
 
 type HeaderProps = {
@@ -79,7 +79,7 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
                                 name="search"
                             />
                         </button>
-                        <Notifications />
+                        <Meldungen />
                         <button
                             className={`hidden rounded-full transition-shadow md:block ${
                                 showMenu
@@ -89,14 +89,14 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
                             onClick={onClickBurger}
                         >
                             <Image
-                                className="w-8 h-8 object-cover rounded-full opacity-100"
-                                src="/images/avatar.jpg"
+                                className="w-8 h-8 object-cover rounded-full opacity-100 border border-b-brand-950"
+                                src="/images/avatar.png"
                                 width={32}
                                 height={32}
                                 alt=""
                             />
                         </button>
-                        <User className="md:hidden" />
+                        <User className="md:hidden border border-b-brand-950 rounded-full w-12 h-12" />
                     </div>
                 </div>
             </div>
