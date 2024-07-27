@@ -8,7 +8,7 @@ import NeuesteAktionen from "./NeuesteAktionen";
 const HomePage = () => {
     return (
         <Layout title="Dashboard">
-            <div className="space-y-2">
+            <div className="space-y-2 mt-20">
                 <Balance />
                 <div className="flex space-x-2 lg:block lg:space-x-0 lg:space-y-2">
                     <TopTokens />

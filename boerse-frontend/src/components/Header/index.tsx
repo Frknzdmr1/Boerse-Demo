@@ -25,7 +25,7 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
     return (
         <>
             <div
-                className={`fixed top-0 right-0 z-10 bg-theme-n-8 md:z-30 md:px-4 md:py-2 md:transition-colors ${
+                className={`fixed bg-theme-on-surface-1 top-0 right-0 z-10 md:z-30 md:px-4 md:py-2 md:transition-colors ${
                     visible
                         ? "left-[21.25rem] 2xl:left-76 xl:left-20 md:left-0"
                         : "left-20 md:left-0"
