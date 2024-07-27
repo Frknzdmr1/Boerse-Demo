@@ -64,6 +64,7 @@ const User = ({ className }: UserProps) => {
                             icon="support"
                             url="/support"
                         />
+                        <NavLink title="Hilfe" icon="news" url="/hilfe" />
                         <div className="group flex items-center h-12 px-4 rounded-xl transition-colors hover:bg-theme-on-surface-2">
                             <Icon
                                 className="shrink-0 mr-4 fill-theme-secondary transition-colors group-hover:fill-theme-primary"
@@ -79,9 +80,10 @@ const User = ({ className }: UserProps) => {
                                 theme
                             />
                         </div>
-                        <NavLink title="Hilfe" icon="news" url="/hilfe" />
+
                     </div>
-                    <NavLink title="Log out" icon="logout" url="/sign-up" />
+                    <div className="bg-theme-on-surface-3 rounded-xl">
+                    <NavLink title="Log out" icon="logout" url="/sign-up" /></div>
                 </MenuItems>
             </Transition>
         </Menu>
