@@ -27,16 +27,16 @@ const Sidebar = ({ className, visible, onClick }: SidebarProps) => {
             } ${className || ""}`}
         >
             <div
-                className={`absolute top-0 left-0 right-0 flex items-center h-24 md:hidden ${
+                className={`absolute w-3/4 top-0 left-0 right-0 flex items-center h-24 md:hidden ${
                     visible ? "px-7" : "px-4"
                 }`}
             >
                 <Link
-                    className="flex justify-center items-center w-12 h-12"
+                    className="flex justify-center items-center w-full h-12"
                     to="/"
                 >
                     <Image
-                        className="w-10 opacity-100"
+                        className="w-10 opacity-100 pr-3"
                         src={
                             colorMode === "light"
                                 ? "/images/logo-dark.svg"
@@ -46,6 +46,7 @@ const Sidebar = ({ className, visible, onClick }: SidebarProps) => {
                         height={40}
                         alt=""
                     />
+                    <span className="md:hidden font-extrabold text-2xl bg-gradient-to-r from-yellow-400 via-rose-500 to-indigo-600 bg-clip-text text-transparent">FRET Trader</span>
                 </Link>
             </div>
             <button
@@ -61,7 +62,7 @@ const Sidebar = ({ className, visible, onClick }: SidebarProps) => {
             </button>
             <div
                 className={`flex flex-col grow overflow-auto scroll-smooth scrollbar-none md:pb-6 ${
-                    visible ? "px-6 md:px-4" : "px-4"
+                    visible ? "pl-6 pr-0 md:px-4" : "px-4"
                 }`}
             >
                 <div className="flex flex-col space-y-2 mb-auto">

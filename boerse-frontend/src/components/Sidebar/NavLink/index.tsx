@@ -17,7 +17,7 @@ const NavLink = ({ title, icon, url, onClick, visible }: NavLinkProps) => {
     if (url) {
         return (
             <Link
-                className={`group flex items-center h-12 rounded-full text-theme-secondary transition-colors hover:text-theme-primary ${
+                className={`group flex items-center h-12 rounded-tl-full rounded-br-0 rounded-bl-full rounded-tr-0 text-theme-secondary transition-colors hover:text-theme-primary ${
                     visible ? "px-4 md:px-5" : "px-3"
                 } ${active ? "bg-theme-on-surface-2 !text-theme-primary" : ""}`}
                 to={url}
