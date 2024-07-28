@@ -18,7 +18,7 @@ const User = ({ className }: UserProps) => {
             <MenuButton className="group w-12 h-12">
                 <Image
                     className="w-12 h-12 object-cover rounded-full opacity-100"
-                    src="/images/avatar.jpg"
+                    src="/images/avatar.png"
                     width={48}
                     height={48}
                     alt=""
@@ -55,15 +55,16 @@ const User = ({ className }: UserProps) => {
                     </div>
                     <div className="mb-2 space-y-1">
                         <NavLink
-                            title="Einstellung"
+                            title="Einstellungen"
                             icon="settings"
-                            url="/einstellung"
+                            url="/einstellungen"
                         />
                         <NavLink
                             title="Support"
-                            icon="support"
+                            icon="news"
                             url="/support"
                         />
+                        <NavLink title="Hilfe" icon="support" url="/hilfe" />
                         <div className="group flex items-center h-12 px-4 rounded-xl transition-colors hover:bg-theme-on-surface-2">
                             <Icon
                                 className="shrink-0 mr-4 fill-theme-secondary transition-colors group-hover:fill-theme-primary"
@@ -79,9 +80,10 @@ const User = ({ className }: UserProps) => {
                                 theme
                             />
                         </div>
-                        <NavLink title="News" icon="news" url="/news" />
+
                     </div>
-                    <NavLink title="Log out" icon="logout" url="/sign-up" />
+                    <div className="bg-theme-on-surface-3 rounded-xl">
+                    <NavLink title="Log out" icon="logout" url="/sign-up" /></div>
                 </MenuItems>
             </Transition>
         </Menu>
