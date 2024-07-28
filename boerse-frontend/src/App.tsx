@@ -4,11 +4,14 @@ import {Route, Routes} from "react-router-dom";
 //import Layout from "@/components/Layout";
 //import MyAssetsPage from "@/pages/MyAssetsPage";
 //import AssetPage from "@/pages/TokenPage";
-import { ChakraProvider } from '@chakra-ui/react'
+import {ChakraProvider} from '@chakra-ui/react'
 import Aktien from "@/components/Aktien";
+import TokenPage from "@/pages/TokenPage";
 
 
 function App() {
+
+
     return (
         <ChakraProvider>
             <Routes>
@@ -17,16 +20,29 @@ function App() {
                         index
                         element={
 
-                            <HomePage />
+                            <HomePage/>
 
                         }
 
                     />
 
                 </Route>
-                <Route path="/current-price" element={<Aktien />} />
+                <Route path="/current-price" element={<Aktien/>}/>
+                        <Route path="/token">
+                    <Route
+                        index
+                        element={
+
+                            <TokenPage/>
+
+                        }
+
+                    />
+
+                </Route>
             </Routes>
         </ChakraProvider>
     )
 }
+
 export default App

@@ -1,9 +1,8 @@
 package de.brightslearning.boersebackend.service;
 
-import de.brightslearning.boersebackend.response_model.OpenClose;
-import de.brightslearning.boersebackend.response_model.PreviousClose;
-import de.brightslearning.boersebackend.response_model.Result;
+import de.brightslearning.boersebackend.response_model.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -54,4 +53,20 @@ public class AktienService {
         return BigDecimal.valueOf(response.close());
     }
 
+public TickerDetailsResponse getTickerDetails(String symbol) {
+        String url = "https://api.polygon.io/v3/reference/tickers/" + symbol.toUpperCase() + "?apiKey=" + polygonApiKey;
+
+        ResponseEntity<TickerDetailsResponse> entity = webClient
+                .get()
+                .uri(url)
+                .retrieve()
+                .toEntity(TickerDetailsResponse.class)
+                .block();
+
+        if (entity != null && entity.getBody() != null) {
+            return entity.getBody();
+        } else {
+            throw new RuntimeException("Ticker details not found for symbol: " + symbol);
+        }
+    }
 }

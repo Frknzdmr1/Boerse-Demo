@@ -9,6 +9,7 @@ import { topTokens } from "@/mocks/topTokens";
 //type TopTokensProps = {};
 
 const TopTokens = () => {
+
     return (
         <Card
             className="flex-1"
