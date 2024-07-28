@@ -2,7 +2,7 @@ const Kauf = () => {
     return (
         <div className="card-sidebar">
             <h2>Kauf und Verkauf</h2>
-            <button>Kaufen</button>
+            <button className="">Kaufen</button>
         </div>
     );
 };

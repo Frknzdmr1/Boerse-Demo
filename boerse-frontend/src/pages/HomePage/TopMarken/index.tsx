@@ -1,12 +1,32 @@
-import { LineChart, Line, ResponsiveContainer } from "recharts";
+import {LineChart, Line, ResponsiveContainer} from "recharts";
 import {Link} from "react-router-dom";
 import Card from "@/components/Card";
 import Image from "@/components/Image";
 import Percent from "@/components/Percent";
 
-import { topTokens } from "@/mocks/topTokens";
+import {topTokens} from "@/mocks/topTokens";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 //type TopTokensProps = {};
+interface StockData {
+    ticker: string;
+    queryCount: number;
+    resultsCount: number;
+    results: StockResult[];
+}
+
+interface StockResult {
+    v: number;  // Volume
+    vw: number; // Volume Weighted Average Price (VWAP)
+    o: number;  // Open
+    c: number;  // Close
+    h: number;  // High
+    l: number;  // Low
+    t: number;  // Timestamp
+    n: number;  // Number of Transactions
+}
+
 
 const TopTokens = () => {
 
@@ -22,7 +42,7 @@ const TopTokens = () => {
                     <Link
                         className="flex items-center h-20 px-3 rounded-2xl border border-transparent transition-colors hover:border-theme-stroke md:px-2"
                         key={item.id}
-                        to="/token"
+                        to={`/token/${item.currencyShort}`}
                     >
                         <div className="mr-5 md:mr-2">
                             <Image

@@ -37,8 +37,8 @@ public class AktienController {
         return service.getTickerDetails(symbol);
     }
 
-    //   @GetMapping("/ticker-details/{symbol}")
-    // public PreviousClose getStockPriceRecords(@PathVariable String symbol) {
-    //      return service.getStockPriceRecords(symbol);
-    //}
+    @GetMapping("/stock-price/{symbol}")
+    public PreviousClose getStockPriceRecords(@PathVariable String symbol) {
+        return service.getStockPriceRecords(symbol);
+    }
 }
