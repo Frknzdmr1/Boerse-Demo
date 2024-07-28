@@ -2,14 +2,10 @@ package de.brightslearning.boersebackend.controller;
 
 
 import de.brightslearning.boersebackend.response_model.PreviousClose;
-import de.brightslearning.boersebackend.response_model.TickerDetails;
 import de.brightslearning.boersebackend.response_model.TickerDetailsResponse;
 import de.brightslearning.boersebackend.service.AktienService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -40,4 +36,9 @@ public class AktienController {
     public TickerDetailsResponse getTickerDetails(@PathVariable String symbol) {
         return service.getTickerDetails(symbol);
     }
+
+    //   @GetMapping("/ticker-details/{symbol}")
+    // public PreviousClose getStockPriceRecords(@PathVariable String symbol) {
+    //      return service.getStockPriceRecords(symbol);
+    //}
 }

@@ -32,7 +32,7 @@ public record TickerDetails(
     public record Address(String address1, String city, String state, String postalCode) {
     }
 
-    public record Branding(String logoUrl, String iconUrl) {
+    public record Branding(String logo_url, String icon_url) {
     }
 
 }

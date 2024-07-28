@@ -35,7 +35,7 @@ public class AktienService {
     }
 
     public BigDecimal getCurrentPrice(String symbol) {
-        LocalDate yesterday = LocalDate.now().minusDays(1); // Get yesterday's date
+        LocalDate yesterday = LocalDate.now().minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = yesterday.format(formatter);
         String url = "https://api.polygon.io/v1/open-close/" + symbol + "/" + date + "?adjusted=true&apiKey=" + polygonApiKey;
@@ -53,7 +53,7 @@ public class AktienService {
         return BigDecimal.valueOf(response.close());
     }
 
-public TickerDetailsResponse getTickerDetails(String symbol) {
+    public TickerDetailsResponse getTickerDetails(String symbol) {
         String url = "https://api.polygon.io/v3/reference/tickers/" + symbol.toUpperCase() + "?apiKey=" + polygonApiKey;
 
         ResponseEntity<TickerDetailsResponse> entity = webClient
@@ -69,4 +69,32 @@ public TickerDetailsResponse getTickerDetails(String symbol) {
             throw new RuntimeException("Ticker details not found for symbol: " + symbol);
         }
     }
+
+
+public PreviousClose getStockPriceRecords(String ticker) {
+    // Calculate fromDate as 6 months ago from today
+    LocalDate fromDate = LocalDate.now().minusMonths(6);
+    // toDate is today's date
+    LocalDate toDate = LocalDate.now();
+
+    // Format dates as strings in yyyy-MM-dd format
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String fromDateStr = fromDate.format(formatter);
+    String toDateStr = toDate.format(formatter);
+
+    String baseUrl = "https://api.polygon.io/v2/aggs";
+    String apiUrl = String.format("%s/ticker/%s/range/1/day/%s/%s?adjusted=true&sort=asc&apiKey=%s",
+            baseUrl, ticker, fromDateStr, toDateStr, polygonApiKey);
+
+    PreviousClose previousClose = Objects.requireNonNull(
+            webClient.get()
+                    .uri(apiUrl)
+                    .retrieve()
+                    .toEntity(PreviousClose.class)
+                    .block()
+    ).getBody();
+
+    return previousClose;
+}
+
 }
