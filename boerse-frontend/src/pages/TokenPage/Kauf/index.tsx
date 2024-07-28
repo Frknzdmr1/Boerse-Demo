@@ -1,8 +1,8 @@
-
 const Kauf = () => {
     return (
-        <div>
-
+        <div className="card-sidebar">
+            <h2>Kauf und Verkauf</h2>
+            <button>Kaufen</button>
         </div>
     );
 };
