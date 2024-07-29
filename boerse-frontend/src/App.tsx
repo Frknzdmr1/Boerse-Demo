@@ -28,18 +28,7 @@ function App() {
                 </Route>
                 <Route path="/aktuelles" element={<AktuellesPage />} />
                 <Route path="/current-price" element={<Aktien/>}/>
-                        <Route path="/token">
-                    <Route
-                        index
-                        element={
-
-                            <TokenPage/>
-
-                        }
-
-                    />
-
-                </Route>
+                <Route path="/token/:symbol" index element={<TokenPage/>}/>
             </Routes>
         </ChakraProvider>
     )
