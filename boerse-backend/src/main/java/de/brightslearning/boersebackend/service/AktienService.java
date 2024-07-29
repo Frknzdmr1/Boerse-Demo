@@ -25,7 +25,8 @@ public class AktienService {
     public PreviousClose getPreviousDay(String ticker) {
         String url = "https://api.polygon.io/v2/aggs/ticker/" + ticker.toUpperCase() + "/prev?apiKey=" + polygonApiKey;
 
-        PreviousClose previousClose = Objects.requireNonNull(webClient.get().uri(url).retrieve().toEntity(PreviousClose.class).block()).getBody();
+        PreviousClose previousClose = Objects
+                .requireNonNull(webClient.get().uri(url).retrieve().toEntity(PreviousClose.class).block()).getBody();
 
         return previousClose;
     }
@@ -34,10 +35,11 @@ public class AktienService {
         LocalDate yesterday = LocalDate.now().minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = yesterday.format(formatter);
-        String url = "https://api.polygon.io/v1/open-close/" + symbol + "/" + date + "?adjusted=true&apiKey=" + polygonApiKey;
+        String url = "https://api.polygon.io/v1/open-close/" + symbol + "/" + date + "?adjusted=true&apiKey="
+                + polygonApiKey;
 
-        OpenClose response = Objects.requireNonNull(webClient.get().uri(url).retrieve().toEntity(OpenClose.class).block()).getBody();
-
+        OpenClose response = Objects
+                .requireNonNull(webClient.get().uri(url).retrieve().toEntity(OpenClose.class).block()).getBody();
 
         return BigDecimal.valueOf(response.close());
     }
@@ -45,7 +47,8 @@ public class AktienService {
     public TickerDetailsResponse getTickerDetails(String symbol) {
         String url = "https://api.polygon.io/v3/reference/tickers/" + symbol.toUpperCase() + "?apiKey=" + polygonApiKey;
 
-        ResponseEntity<TickerDetailsResponse> entity = webClient.get().uri(url).retrieve().toEntity(TickerDetailsResponse.class).block();
+        ResponseEntity<TickerDetailsResponse> entity = webClient.get().uri(url).retrieve()
+                .toEntity(TickerDetailsResponse.class).block();
 
         if (entity != null && entity.getBody() != null) {
             return entity.getBody();
@@ -53,7 +56,6 @@ public class AktienService {
             throw new RuntimeException("Ticker details not found for symbol: " + symbol);
         }
     }
-
 
     public PreviousClose getStockPriceRecords(String ticker) {
         // Calculate fromDate as 6 months ago from today
@@ -66,9 +68,11 @@ public class AktienService {
         String toDateStr = heute.format(formatter);
 
         String baseUrl = "https://api.polygon.io/v2/aggs";
-        String apiUrl = String.format("%s/ticker/%s/range/1/day/%s/%s?adjusted=true&sort=asc&apiKey=%s", baseUrl, ticker, fromDateStr, toDateStr, polygonApiKey);
+        String apiUrl = String.format("%s/ticker/%s/range/1/day/%s/%s?adjusted=true&sort=asc&apiKey=%s", baseUrl,
+                ticker, fromDateStr, toDateStr, polygonApiKey);
 
-        PreviousClose previousClose = Objects.requireNonNull(webClient.get().uri(apiUrl).retrieve().toEntity(PreviousClose.class).block()).getBody();
+        PreviousClose previousClose = Objects
+                .requireNonNull(webClient.get().uri(apiUrl).retrieve().toEntity(PreviousClose.class).block()).getBody();
 
         return previousClose;
     }
