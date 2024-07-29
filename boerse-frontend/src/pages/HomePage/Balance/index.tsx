@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps } from "recharts";
-import { useColorMode } from "@chakra-ui/color-mode";
-import { Input, Button, Box, Text, Stack, Heading, Divider } from '@chakra-ui/react';
+import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps} from "recharts";
+import {useColorMode} from "@chakra-ui/color-mode";
+import {Input, Button, Box, Text, Stack, Heading, Divider} from '@chakra-ui/react';
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
 
 const duration = [
-    { id: "0", title: "All time" },
-    { id: "1", title: "Month" },
-    { id: "2", title: "Year" },
+    {id: "0", title: "All time"},
+    {id: "1", title: "Month"},
+    {id: "2", title: "Year"},
 ];
 
 type ChartData = {
@@ -39,9 +39,9 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = ({ userId }: { userId: string }) => {
+const Balance = ({userId}: { userId: string }) => {
     const [time, setTime] = useState(duration[0]);
-    const { colorMode } = useColorMode();
+    const {colorMode} = useColorMode();
     const isDarkMode = colorMode === "dark";
 
     const [chartData, setChartData] = useState<ChartData[]>([]);
@@ -104,9 +104,17 @@ const Balance = ({ userId }: { userId: string }) => {
             const priceResponse = await axios.get(`http://localhost:8080/aktie/current-price/${newStockSymbol}`);
             const currentPrice = priceResponse.data;
 
-            setChartData([...chartData, { name: newStockSymbol, price: currentPrice }]);
+            // Log the retrieved current price for debugging
+            console.log(`Current price of ${newStockSymbol}: ${currentPrice}`);
 
-            const updatedPortfolio = [...portfolio, { symbol: newStockSymbol, aktuellerPreis: currentPrice, menge: newStockQuantity }];
+
+            setChartData([...chartData, {name: newStockSymbol, price: currentPrice}]);
+
+            const updatedPortfolio = [...portfolio, {
+                symbol: newStockSymbol,
+                aktuellerPreis: currentPrice,
+                menge: newStockQuantity
+            }];
             setPortfolio(updatedPortfolio);
 
             const totalValue = updatedPortfolio.reduce((acc: number, stock: any) => acc + (stock.menge * stock.aktuellerPreis), 0);
@@ -137,7 +145,7 @@ const Balance = ({ userId }: { userId: string }) => {
                         value={portfolioValue}
                         currency="€"
                     />
-                    <Percent className="ml-1 text-title-1s" value={portfolioChange} />
+                    <Percent className="ml-1 text-title-1s" value={portfolioChange}/>
                 </Box>
                 <Box className="h-[14rem] -mb-2">
                     <ResponsiveContainer width="100%" height="100%">
@@ -145,12 +153,12 @@ const Balance = ({ userId }: { userId: string }) => {
                             width={730}
                             height={250}
                             data={chartData}
-                            margin={{ top: 0, right: 6, left: 6, bottom: 0 }}
+                            margin={{top: 0, right: 6, left: 6, bottom: 0}}
                         >
                             <defs>
                                 <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#9CC5FF" stopOpacity={0.13} />
-                                    <stop offset="95%" stopColor="#B9D6FF" stopOpacity={0} />
+                                    <stop offset="5%" stopColor="#9CC5FF" stopOpacity={0.13}/>
+                                    <stop offset="95%" stopColor="#B9D6FF" stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
                             <XAxis
@@ -166,13 +174,13 @@ const Balance = ({ userId }: { userId: string }) => {
                                 dy={4}
                             />
                             <Tooltip
-                                content={<CustomTooltip />}
+                                content={<CustomTooltip/>}
                                 cursor={{
                                     stroke: isDarkMode ? "#272B30" : "#EFEFEF",
                                     strokeWidth: 1,
                                     fill: "transparent",
                                 }}
-                                wrapperStyle={{ outline: "none" }}
+                                wrapperStyle={{outline: "none"}}
                             />
                             <Area
                                 type="monotone"
@@ -191,7 +199,7 @@ const Balance = ({ userId }: { userId: string }) => {
                 </Box>
             </Box>
 
-            <Divider mt={6} mb={6} />
+            <Divider mt={6} mb={6}/>
 
             <Box mt={6}>
                 <Stack spacing={4}>
@@ -215,7 +223,8 @@ const Balance = ({ userId }: { userId: string }) => {
                     <Heading as="h3" size="md" mb={4}>Portfolio</Heading>
                     {portfolio.map((stock, index) => (
                         <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
-                            <Text>{stock.symbol}: {stock.menge} shares @ €{typeof stock.aktuellerPreis === 'number' ? stock.aktuellerPreis.toFixed(2) : stock.aktuellerPreis} each</Text>
+                            <Text>{stock.symbol}: {stock.menge} shares @
+                                €{typeof stock.aktuellerPreis === 'number' ? stock.aktuellerPreis.toFixed(2) : stock.aktuellerPreis} each</Text>
                         </Box>
                     ))}
                 </Box>
