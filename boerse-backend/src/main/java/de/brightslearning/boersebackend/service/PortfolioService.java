@@ -51,11 +51,13 @@ public class PortfolioService {
 
     public PortfolioDTO getPortfolioByUserId(UUID userId) {
         Portfolio portfolio = portfolioRepository.findPortfolioByBenutzerId(userId);
-        return new PortfolioDTO(portfolio.getPortfolioAktien().stream().map(portfolioAktie -> new AktieDTO(
-                portfolioAktie.getAktie().getSymbol(),
-                portfolioAktie.getAktie().getAktuellerPreis(),
-                portfolioAktie.getMenge(),
-                portfolioAktie.getDurchschnittlicherKaufpreis()
-        )).toList());
+        return new PortfolioDTO(
+                portfolio.getId(),
+                portfolio.getPortfolioAktien().stream().map(portfolioAktie -> new AktieDTO(
+                    portfolioAktie.getAktie().getSymbol(),
+                    portfolioAktie.getAktie().getAktuellerPreis(),
+                    portfolioAktie.getMenge(),
+                    portfolioAktie.getDurchschnittlicherKaufpreis()
+            )).toList());
     }
 }
