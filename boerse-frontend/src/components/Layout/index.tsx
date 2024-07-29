@@ -27,15 +27,14 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
                     : "pl-20 md:pl-0"
             }`}
         >
-            <Sidebar
-                className={`md:transition-transform ${
+            <Sidebar className={`md:transition-transform ${
                     showMenu ? "md:translate-x-0" : "md:-translate-x-full"
                 }`}
                 visible={visible}
                 onClick={() => setVisible(!visible)}
             />
             <div className="">
-                <div className="max-w-[80rem] mx-auto pt-24 px-10 pb-10 lg:px-6 md:pt-20 md:px-4 md:pb-8">
+                <div className="max-w-[80rem] mx-auto pt-24 px-10 pb-10 pt-40 lg:px-6 md:pt-20 md:px-4 md:pb-8">
                     <Header
                         visible={visible}
                         title={title}
