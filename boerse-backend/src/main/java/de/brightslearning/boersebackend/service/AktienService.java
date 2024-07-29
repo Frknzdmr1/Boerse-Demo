@@ -25,14 +25,7 @@ public class AktienService {
     public PreviousClose getPreviousDay(String ticker) {
         String url = "https://api.polygon.io/v2/aggs/ticker/" + ticker.toUpperCase() + "/prev?apiKey=" + polygonApiKey;
 
-        PreviousClose previousClose = Objects.requireNonNull(
-                webClient
-                        .get()
-                        .uri(url)
-                        .retrieve()
-                        .toEntity(PreviousClose.class)
-                        .block()
-        ).getBody();
+        PreviousClose previousClose = Objects.requireNonNull(webClient.get().uri(url).retrieve().toEntity(PreviousClose.class).block()).getBody();
 
         return previousClose;
     }
