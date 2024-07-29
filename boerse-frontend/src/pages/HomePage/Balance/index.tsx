@@ -53,7 +53,7 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = () => {
+const Balance = (tickerDetails={tickerDetails}) => {
     const [time, setTime] = useState(duration[0]);
     const { colorMode } = useColorMode();
     const isDarkMode = colorMode === "dark";

@@ -19,8 +19,12 @@ const Search = () => {
 
         try {
             const response = await axios.get(`http://localhost:8080/aktie/stock-price/${symbol}`);
-            setPrice(response.data.results[124].c);
-            console.log(response.data.results[124].c)
+            const lastIndex = response.data.results.length - 1;
+            if (lastIndex >= 0) {
+                setPrice(response.data.results[lastIndex].c);
+            } else {
+                setError('Keine Daten gefunden.'); // Optional: Handle case where results array is empty
+            }
             setError(null);
         } catch (err) {
             setError('Fehler beim Abrufen des aktuellen Preises. Bitte versuchen Sie es später erneut.');
@@ -56,8 +60,8 @@ const Search = () => {
                     <div className="px-8 py-3 text-caption-1 text-theme-secondary md:px-4">
                         Aktueller Preis für
                         {symbol && (
-                            <Link to={`token/${symbol}`} className="hover:text-theme-primary">
-                                <div> {symbol}: {price}</div>
+                            <Link to={`http://localhost:5173/token/${symbol}`} className="hover:text-theme-primary">
+                                <div>{symbol}: {price}</div>
                             </Link>
                         )}
                     </div>

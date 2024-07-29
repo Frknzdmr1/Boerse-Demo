@@ -41,4 +41,9 @@ public class AktienController {
     public PreviousClose getStockPriceRecords(@PathVariable String symbol) {
         return service.getStockPriceRecords(symbol);
     }
+
+    @GetMapping("/stocks/{symbol}/prices")
+    public double[] getClosingPrices(@PathVariable String symbol) {
+        return service.getClosingPricesArray(symbol);
+    }
 }

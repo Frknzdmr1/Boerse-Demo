@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps } from "recharts";
-import { useColorMode } from "@chakra-ui/color-mode";
-import Card from "@/components/Card";
+import {useEffect, useState} from "react";
+import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps} from "recharts";
+import axios from "axios";
+import moment from "moment";
+import {useColorMode} from "@chakra-ui/color-mode";
+import {Card} from "@chakra-ui/react";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
-
-import { chartBalanceHome } from "@/mocks/charts";
 
 const duration = [
     {
@@ -24,11 +24,10 @@ const duration = [
 
 // Define the type for your chart data
 type ChartData = {
-    name: string;
+    date: string;
     price: number;
 };
 
-// Use Recharts' TooltipProps with your custom data type
 const CustomTooltip = ({
                            active,
                            payload,
@@ -53,57 +52,47 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = () => {
+const BalanceToken = ({tickerDetails, closingPrices}) => {
     const [time, setTime] = useState(duration[0]);
-    const { colorMode } = useColorMode();
+    const {colorMode} = useColorMode();
     const isDarkMode = colorMode === "dark";
 
+
+    const today = moment();
+    const chartData: ChartData[] = closingPrices.map((price, index) => ({
+        date: today.clone().subtract(closingPrices.length - index - 1, 'days').format('YYYY-MM-DD'),
+        price: price,
+    }));
+
     return (
-        <Card
-            title="Wallet"
-            arrowTitle
-            option={time}
-            setOption={setTime}
-            options={duration}
-        >
+        <Card title="Wallet"
+              arrowTitle
+              option={time}
+              setOption={setTime}
+              options={duration} style={{padding: "40px"}}>
             <div className="flex items-end md:mt-4">
                 <CurrencyFormat
                     className="text-h1 md:text-h3"
                     value={3200.8}
                     currency="€"
                 />
-                <Percent className="ml-1 text-title-1s" value={85.66} />
+                <Percent className="ml-1 text-title-1s" value={85.66}/>
             </div>
             <div className="h-[14rem] -mb-2">
+                <h2 className="text-title-1m mt-2">{tickerDetails.name} {tickerDetails.ticker}</h2>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
-                        width={730}
-                        height={250}
-                        data={chartBalanceHome}
-                        margin={{ top: 0, right: 6, left: 6, bottom: 0 }}
+                        data={chartData}
+                        margin={{top: 10, right: 30, left: 0, bottom: 15}}
                     >
                         <defs>
-                            <linearGradient
-                                id="color"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="5%"
-                                    stopColor="#9CC5FF"
-                                    stopOpacity={0.13}
-                                />
-                                <stop
-                                    offset="95%"
-                                    stopColor="#B9D6FF"
-                                    stopOpacity={0}
-                                />
+                            <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#9CC5FF" stopOpacity={0.13}/>
+                                <stop offset="95%" stopColor="#B9D6FF" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
                         <XAxis
-                            dataKey="name"
+                            dataKey="date"
                             tickLine={false}
                             stroke={isDarkMode ? "#272B30" : "#EFEFEF"}
                             tick={{
@@ -115,13 +104,8 @@ const Balance = () => {
                             dy={4}
                         />
                         <Tooltip
-                            content={<CustomTooltip />}
-                            cursor={{
-                                stroke: isDarkMode ? "#272B30" : "#EFEFEF",
-                                strokeWidth: 1,
-                                fill: "transparent",
-                            }}
-                            wrapperStyle={{ outline: "none" }}
+                            content={<CustomTooltip/>}
+                            cursor={{stroke: isDarkMode ? "#272B30" : "#EFEFEF", strokeWidth: 1, fill: "transparent"}}
                         />
                         <Area
                             type="monotone"
@@ -129,11 +113,7 @@ const Balance = () => {
                             stroke="#0C68E9"
                             fillOpacity={1}
                             fill="url(#color)"
-                            activeDot={{
-                                r: 6,
-                                stroke: isDarkMode ? "#1A1D1F" : "#FCFCFC",
-                                strokeWidth: 3,
-                            }}
+                            activeDot={{r: 6, stroke: isDarkMode ? "#1A1D1F" : "#FCFCFC", strokeWidth: 3}}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
@@ -142,4 +122,4 @@ const Balance = () => {
     );
 };
 
-export default Balance;
+export default BalanceToken;
