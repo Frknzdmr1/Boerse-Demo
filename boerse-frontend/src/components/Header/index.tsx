@@ -6,7 +6,7 @@ import Modal from "@/components/Modal";
 import Trade from "@/components/Trade";
 import User from "@/components/User";
 import Image from "@/components/Image";
-import Notifications from "./Meldungen";
+import Meldungen from "./Meldungen";
 import Search from "./Search";
 
 type HeaderProps = {
@@ -25,7 +25,7 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
     return (
         <>
             <div
-                className={`fixed top-0 right-0 z-10 bg-theme-n-8 md:z-30 md:px-4 md:py-2 md:transition-colors ${
+                className={`fixed bg-theme-on-surface-1 top-0 right-0 z-10 md:z-30 md:px-4 md:py-2 md:transition-colors ${
                     visible
                         ? "left-[21.25rem] 2xl:left-76 xl:left-20 md:left-0"
                         : "left-20 md:left-0"
@@ -79,7 +79,7 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
                                 name="search"
                             />
                         </button>
-                        <Notifications />
+                        <Meldungen />
                         <button
                             className={`hidden rounded-full transition-shadow md:block ${
                                 showMenu
@@ -89,14 +89,14 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
                             onClick={onClickBurger}
                         >
                             <Image
-                                className="w-8 h-8 object-cover rounded-full opacity-100"
-                                src="/images/avatar.jpg"
+                                className="w-8 h-8 object-cover rounded-full opacity-100 border border-b-brand-950"
+                                src="/images/avatar.png"
                                 width={32}
                                 height={32}
                                 alt=""
                             />
                         </button>
-                        <User className="md:hidden" />
+                        <User className="md:hidden border border-b-brand-950 rounded-full w-12 h-12" />
                     </div>
                 </div>
             </div>

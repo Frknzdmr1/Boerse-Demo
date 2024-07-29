@@ -13,7 +13,7 @@ const Meldungen = () => {
             <MenuButton className="relative group w-12 h-12 md:w-8 md:h-8">
                 <Icon
                     className="fill-theme-secondary transition-colors group-hover:fill-theme-primary ui-open:fill-theme-primary"
-                    name="meldungen"
+                    name="notification"
                 />
                 <div className="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-2 border-theme-n-8 bg-theme-red rounded-full md:top-0 md:right-1"></div>
             </MenuButton>

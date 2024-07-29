@@ -2,8 +2,8 @@ export const topTokens = [
     {
         id: "0",
         icon: "/images/crypto-icon-4.png",
-        currencyFull: "Ripple",
-        currencyShort: "XRP",
+        currencyFull: "Apple",
+        currencyShort: "AAPL",
         price: "€0.4831",
         percent: 26.66,
         itemsCharts: [

@@ -13,4 +13,13 @@ public record Result(
         long t,
         Integer n
 ) {
+    @Override
+    public double c() {
+        return c;
+    }
+
+    @Override
+    public long t() {
+        return t;
+    }
 }
