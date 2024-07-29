@@ -7,7 +7,7 @@ import {Route, Routes} from "react-router-dom";
 import { ChakraProvider } from '@chakra-ui/react'
 import Aktien from "@/components/Aktien";
 import AktuellesPage from "@/pages/AktuellesPage";
-import TokenPage from "@/pages/TokenPage";
+import Portfolio from '@/components/Portfolio';
 
 
 function App() {
@@ -26,20 +26,9 @@ function App() {
                     />
 
                 </Route>
+                <Route path="/current-price" element={<Aktien />} />
                 <Route path="/aktuelles" element={<AktuellesPage />} />
-                <Route path="/current-price" element={<Aktien/>}/>
-                        <Route path="/token">
-                    <Route
-                        index
-                        element={
-
-                            <TokenPage/>
-
-                        }
-
-                    />
-
-                </Route>
+                <Route path="/portfolio" element={<Portfolio />}
             </Routes>
         </ChakraProvider>
     )
