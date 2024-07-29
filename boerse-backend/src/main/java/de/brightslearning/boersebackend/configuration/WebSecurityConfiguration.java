@@ -21,48 +21,53 @@ import java.util.List;
 @Configuration
 public class WebSecurityConfiguration {
 
-        private final SecurityService securityService;
+    private final SecurityService securityService;
 
-        @Autowired
-        public WebSecurityConfiguration(SecurityService securityService) {
-                this.securityService = securityService;
-        }
+    @Autowired
+    public WebSecurityConfiguration(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .csrf(csrf -> csrf.disable())
-                                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                                .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/", "/login", "/register", "/h2-console/**",
-                                                                "/aktie/**", "/aktie/prev/**",
-                                                                "/aktie/current-price/**", "/portfolio/**")
-                                                .permitAll()
-                                                .anyRequest().authenticated())
-                                .formLogin(form -> form
-                                                .defaultSuccessUrl("/")
-                                                .permitAll())
-                                .logout(logout -> logout
-                                                .logoutSuccessUrl("/")
-                                                .permitAll())
-                                .httpBasic(withDefaults -> {
-                                });
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/login", "/register", "/h2-console/**",
+                                "/aktie/**", "/aktie/prev/**",
+                                "/aktie/current-price/**", "/portfolio/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                )
+                .httpBasic(withDefaults -> {
+                });
 
-                // Definiere die Landingpage nach dem Logout:
-                http.logout(l -> l.logoutSuccessUrl("/"));
+        // Definiere die Landingpage nach dem Logout:
+        http.logout(l -> l.logoutSuccessUrl("/"));
 
-                return http.build();
-        }
+        // Enable H2-DB support
+        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
-        @Bean
-        public AuthenticationManager authenticationManager(
-                        AuthenticationConfiguration authenticationConfiguration) throws Exception {
-                return authenticationConfiguration.getAuthenticationManager();
-        }
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
 }
