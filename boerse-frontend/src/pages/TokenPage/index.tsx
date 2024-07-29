@@ -18,7 +18,7 @@ const TokenPage = () => {
         const fetchClosingPrices = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/aktie/stocks/${symbol}/prices`);
-                setClosingPrices(response.data); // Assuming response.data is an array of closing prices
+                setClosingPrices(response.data);
                 console.log(response.data)
             } catch (error) {
                 console.error('Error fetching closing prices:', error);

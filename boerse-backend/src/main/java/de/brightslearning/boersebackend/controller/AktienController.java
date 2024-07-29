@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/aktie")
@@ -43,7 +44,7 @@ public class AktienController {
     }
 
     @GetMapping("/stocks/{symbol}/prices")
-    public double[] getClosingPrices(@PathVariable String symbol) {
+    public List<Object> getClosingPrices(@PathVariable String symbol) {
         return service.getClosingPricesArray(symbol);
     }
 }

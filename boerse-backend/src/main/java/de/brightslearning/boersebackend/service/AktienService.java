@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class AktienService {
         return previousClose;
     }
 
-    public double[] getClosingPricesArray(String ticker) {
+    public List<Object> getClosingPricesArray(String ticker) {
         PreviousClose previousClose = getStockPriceRecords(ticker);
 
         if (previousClose == null) {
@@ -81,11 +81,18 @@ public class AktienService {
         }
 
         List<Result> results = previousClose.results();
-        List<Double> closingPrices = results.stream().map(Result::c).collect(Collectors.toList());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-        return closingPrices.stream().mapToDouble(Double::doubleValue).toArray();
+        return results.stream()
+                .map(result -> {
+                    long timestamp = result.t();
+                    String formattedDate = sdf.format(timestamp);
+                    double dprice = result.c();
+                    return new Object() {
+                        public String date = formattedDate;
+                        public double price = dprice;
+                    };
+                })
+                .collect(Collectors.toList());
     }
-
-
-
 }

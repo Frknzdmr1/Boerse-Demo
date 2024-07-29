@@ -58,10 +58,9 @@ const BalanceToken = ({tickerDetails, closingPrices}) => {
     const isDarkMode = colorMode === "dark";
 
 
-    const today = moment();
-    const chartData: ChartData[] = closingPrices.map((price, index) => ({
-        date: today.clone().subtract(closingPrices.length - index - 1, 'days').format('YYYY-MM-DD'),
-        price: price,
+    const chartData: ChartData[] = closingPrices.map((closingObject) => ({
+        date: closingObject.date,
+        price: closingObject.price,
     }));
 
     return (
