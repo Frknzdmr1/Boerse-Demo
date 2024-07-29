@@ -2,12 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Input, Button, Box, Text, Stack, Heading, Divider } from '@chakra-ui/react';
 
-const Portfolio = ({ userId }) => {
-    const [stocks, setStocks] = useState([]);
+type Props = {
+    userId: string
+}
+type Stock = {
+    symbol: string,
+    menge: number,
+    durchschnittlicherKaufpreis: number
+}
+
+type Portfolio = {
+    id: string,
+    portfolioAktien: Stock[]
+}
+
+const Portfolio = ({ userId }: Props): React.ReactElement => {
+    const [stocks, setStocks] = useState<Stock[]>([]);
     const [newStockSymbol, setNewStockSymbol] = useState('');
     const [newStockQuantity, setNewStockQuantity] = useState(0);
-    const [portfolio, setPortfolio] = useState(null);
+    const [portfolio, setPortfolio] = useState<Portfolio>({
+        id:"",
+        portfolioAktien: []
+    });
 
+    
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
@@ -23,8 +41,8 @@ const Portfolio = ({ userId }) => {
         fetchPortfolio();
     }, [userId]);
 
-    const groupStocks = (stocks) => {
-        const grouped = stocks.reduce((acc, stock) => {
+    const groupStocks = (stocks: Stock[]): Stock[] => {
+        const grouped = stocks.reduce((acc: any, stock: Stock) => {
             if (acc[stock.symbol]) {
                 acc[stock.symbol].menge += stock.menge;
             } else {
