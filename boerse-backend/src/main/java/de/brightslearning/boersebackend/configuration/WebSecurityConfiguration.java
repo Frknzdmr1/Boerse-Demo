@@ -1,5 +1,6 @@
 package de.brightslearning.boersebackend.configuration;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +10,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.List;
 
@@ -21,11 +26,15 @@ import java.util.List;
 @Configuration
 public class WebSecurityConfiguration {
 
-    private final SecurityService securityService;
+
+    private JwtAuthEntryPoint authEntryPoint;
+
+    private SecurityService securityService;
 
     @Autowired
-    public WebSecurityConfiguration(SecurityService securityService) {
+    public WebSecurityConfiguration( SecurityService securityService, JwtAuthEntryPoint authEntryPoint){
         this.securityService = securityService;
+        this.authEntryPoint = authEntryPoint;
     }
 
     @Bean
@@ -34,9 +43,16 @@ public class WebSecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Zeige den default logIn an: - siehe https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html for adaptions
+
         http
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(
+                        sessionAuthStrategy ->
+                                sessionAuthStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/login", "/register", "/h2-console/**",
@@ -56,8 +72,7 @@ public class WebSecurityConfiguration {
                 });
 
         // Definiere die Landingpage nach dem Logout:
-        http.logout(l -> l.logoutSuccessUrl("/"));
-
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // Enable H2-DB support
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
@@ -68,6 +83,12 @@ public class WebSecurityConfiguration {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
+    @Bean
+    JWTAuthenticationFilter jwtAuthenticationFilter(){
+        return new JWTAuthenticationFilter();
     }
 
 }
