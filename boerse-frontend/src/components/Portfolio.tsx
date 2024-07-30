@@ -25,7 +25,8 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
         portfolioAktien: []
     });
 
-    
+    const [actions, setActions] = useState<string[]>([]);
+
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
@@ -64,11 +65,26 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
             const updatedPortfolio = await axios.get(`http://localhost:8080/portfolio/${userId}`);
             setPortfolio(updatedPortfolio.data);
             setStocks(groupStocks(updatedPortfolio.data.portfolioAktien));
+            setActions([...actions, `Added ${newStockQuantity} shares of ${newStockSymbol}`]);
 
             setNewStockSymbol('');
             setNewStockQuantity(0);
         } catch (err) {
             console.error('Error adding stock to portfolio', err);
+        }
+    };
+
+    const removeStockFromPortfolio = async (symbol: string) => {
+        try {
+            // Implement the remove stock API call here
+            // Example: await axios.post(`http://localhost:8080/portfolio/${portfolio.id}/remove-stock`, { symbol });
+
+            const updatedPortfolio = await axios.get(`http://localhost:8080/portfolio/${userId}`);
+            setPortfolio(updatedPortfolio.data);
+            setStocks(groupStocks(updatedPortfolio.data.portfolioAktien));
+            setActions([...actions, `Removed shares of ${symbol}`]);
+        } catch (err) {
+            console.error('Error removing stock from portfolio', err);
         }
     };
 
@@ -98,6 +114,7 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
                 {stocks.map((stock, index) => (
                     <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
                         <Text>{stock.symbol}: {stock.menge} shares @ €{stock.durchschnittlicherKaufpreis.toFixed(2)} each</Text>
+                        <Button onClick={() => removeStockFromPortfolio(stock.symbol)} colorScheme="red" size="sm">Remove</Button>
                     </Box>
                 ))}
             </Box>

@@ -22,6 +22,11 @@ public class PortfolioController {
         return portfolioService.addStockToPortfolio(portfolioId, portfolioAktie);
     }
 
+    @PostMapping("/{portfolioId}/remove-stock")
+    public void removeStockFromPortfolio(@PathVariable UUID portfolioId, @RequestBody String symbol) {
+        portfolioService.removeStockFromPortfolio(portfolioId, symbol);
+    }
+
     @GetMapping("/{userId}")
     public PortfolioDTO getPortfolioByUserId(@PathVariable UUID userId) {
         return portfolioService.getPortfolioByUserId(userId);

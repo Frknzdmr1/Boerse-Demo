@@ -29,6 +29,16 @@ public class PortfolioService {
     @Autowired
     private AktieRepository aktieRepository;
 
+    public void removeStockFromPortfolio(UUID portfolioId, String symbol) {
+        Portfolio portfolio = portfolioRepository.findById(portfolioId)
+                .orElseThrow(() -> new RuntimeException("Portfolio not found"));
+        Aktie aktie = aktieRepository.findBySymbol(symbol)
+                .orElseThrow(() -> new RuntimeException("Aktie not found"));
+
+        portfolioAktieRepository.findByPortfolioAndAktie(portfolio, aktie)
+                .ifPresent(portfolioAktieRepository::delete);
+    }
+
     public PortfolioAktie addStockToPortfolio(UUID portfolioId, PortfolioAktienPost portfolioAktie) {
         Portfolio portfolio = portfolioRepository.findById(portfolioId).orElseThrow(() -> new RuntimeException("Portfolio not found"));
         Aktie aktie = aktieRepository.findBySymbol(portfolioAktie.symbol()).orElseThrow(() -> new RuntimeException("Aktie not found"));

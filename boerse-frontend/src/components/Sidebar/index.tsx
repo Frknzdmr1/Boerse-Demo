@@ -1,3 +1,4 @@
+// Sidebar.js
 import { Link } from "react-router-dom";
 import { useColorMode } from "@chakra-ui/react";
 import Image from "@/components/Image";
@@ -76,42 +77,43 @@ const Sidebar = ({ className, visible, onClick }: SidebarProps) => {
                         />
                     ))}
                 </div>
-                {visible}
-                <div className="hidden flex-col mt-6 pt-4 border-t border-theme-stroke space-y-1 md:flex">
-                    <NavLink
-                        title="Contact support"
-                        icon="support"
-                        url="/support"
-                        visible={visible}
-                    />
-                    <div className="group flex items-center h-12 px-4 rounded-xl transition-colors hover:bg-theme-on-surface-2 md:hover:bg-transparent">
-                        <Icon
-                            className="shrink-0 mr-4 fill-theme-secondary transition-colors group-hover:fill-theme-primary md:group-hover:fill-theme-secondary"
-                            name={isLightMode ? "moon" : "sun"}
+                {visible && (
+                    <div className="hidden flex-col mt-6 pt-4 border-t border-theme-stroke space-y-1 md:flex">
+                        <NavLink
+                            title="Contact support"
+                            icon="support"
+                            url="/support"
+                            visible={visible}
                         />
-                        <div className="mr-auto text-base-1s text-theme-secondary transition-colors group-hover:text-theme-primary md:group-hover:text-theme-secondary">
-                            {isLightMode ? "Dark" : "Light"}
+                        <div className="group flex items-center h-12 px-4 rounded-xl transition-colors hover:bg-theme-on-surface-2 md:hover:bg-transparent">
+                            <Icon
+                                className="shrink-0 mr-4 fill-theme-secondary transition-colors group-hover:fill-theme-primary md:group-hover:fill-theme-secondary"
+                                name={isLightMode ? "moon" : "sun"}
+                            />
+                            <div className="mr-auto text-base-1s text-theme-secondary transition-colors group-hover:text-theme-primary md:group-hover:text-theme-secondary">
+                                {isLightMode ? "Dark" : "Light"}
+                            </div>
+                            <Switch
+                                value={colorMode}
+                                setValue={toggleColorMode}
+                                small
+                                theme
+                            />
                         </div>
-                        <Switch
-                            value={colorMode}
-                            setValue={toggleColorMode}
-                            small
-                            theme
+                        <NavLink
+                            title="News"
+                            icon="news"
+                            url="/news"
+                            visible={visible}
+                        />
+                        <NavLink
+                            title="Log out"
+                            icon="logout"
+                            url="/sign-up"
+                            visible={visible}
                         />
                     </div>
-                    <NavLink
-                        title="News"
-                        icon="news"
-                        url="/news"
-                        visible={visible}
-                    />
-                    <NavLink
-                        title="Log out"
-                        icon="logout"
-                        url="/sign-up"
-                        visible={visible}
-                    />
-                </div>
+                )}
             </div>
             <div
                 className={`absolute left-0 right-0 bottom-0 pb-6 md:hidden ${
