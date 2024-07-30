@@ -6,6 +6,8 @@ import Aktien from '@/components/Aktien';
 import Portfolio from '@/components/Portfolio';
 import AktuellesPage from "@/pages/AktuellesPage";
 import TokenPage from "@/pages/TokenPage";
+import HandelnPage from "@/pages/HandelnPage";
+import EinstellungenPage from "@/pages/EinstellungenPage";
 
 function App() {
     return (
@@ -28,6 +30,8 @@ function App() {
                 <Route path="/aktuelles" element={<AktuellesPage />} />
                 <Route path="/current-price" element={<Aktien/>}/>
                 <Route path="/token/:symbol" index element={<TokenPage/>}/>
+                <Route path="/handeln" index element={<HandelnPage />}/>
+                <Route path="/einstellungen" index element={<EinstellungenPage />}/>
             </Routes>
         </ChakraProvider>
     );
