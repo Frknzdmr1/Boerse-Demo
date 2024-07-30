@@ -30,7 +30,6 @@ interface StockResult {
 
 const TopTokens = () => {
 
-
     return (
         <Card
             className="flex-1"

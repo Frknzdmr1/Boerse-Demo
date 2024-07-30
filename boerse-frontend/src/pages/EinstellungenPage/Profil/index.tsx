@@ -1,17 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Field from "@/components/Field";
 import Image from "@/components/Image";
 import Details from "../Details";
-
+import axios from "axios";
 
 const Profil = () => {
-    const [displayName, setDisplayName] = useState("");
+    const [passwort, setPasswort] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [location, setLocation] = useState("");
     const [bio, setBio] = useState("");
     const [website, setWebsite] = useState("");
     const [social, setSocial] = useState("");
+    const userId = "6953623e-2077-4adc-bbdd-628b762a2603";
+
+    useEffect(() => {
+        // Beispiel: Benutzerdaten laden, wenn eine userId vorhanden ist
+        if (userId) {
+            axios.get(`http://localhost:8080/benutzer/${userId}`)
+                .then(response => {
+                    const userData = response.data;
+                    setPasswort(userData.passwort);
+                    setUsername(userData.benutzername);
+                    setEmail(userData.email);
+                    setLocation(userData.location);
+                    setBio(userData.bio);
+                    setWebsite(userData.website);
+                    setSocial(userData.social);
+                })
+                .catch(error => {
+                    console.error('Error loading user data:', error);
+                });
+        }
+    }, [userId]);
+
+    const saveProfile = () => {
+        const userData = {
+            benutzername: username,
+            email,
+            passwort,
+
+        };
+         console.log('UserData:', userData);
+
+        if (userId) {
+            axios.put(`http://localhost:8080/benutzer/${userId}`, userData)
+                .then(response => {
+                    console.log('Profile updated successfully');
+                })
+                .catch(error => {
+                    console.error('Error updating profile:', error);
+                });
+        }
+    };
 
     return (
         <Details title="Profil" image="/images/avatar.png">
@@ -42,10 +83,11 @@ const Profil = () => {
                 <div className="flex space-x-6 md:block md:space-x-0 md:space-y-6">
                     <Field
                         className="flex-1"
-                        label="Name"
+                        type="password"
+                        label="Passwort"
                         placeholder="Name"
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
+                        value={passwort}
+                        onChange={(e) => setPasswort(e.target.value)}
                         required
                     />
                     <Field
@@ -103,7 +145,7 @@ const Profil = () => {
                     />
                 </div>
             </div>
-            <button className="btn-secondary mt-6 md:w-full">Save</button>
+            <button onClick={saveProfile} className="btn-secondary mt-6 md:w-full">Save</button>
         </Details>
     );
 };
