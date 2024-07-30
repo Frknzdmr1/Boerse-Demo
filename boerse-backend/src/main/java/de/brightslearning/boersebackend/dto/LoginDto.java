@@ -1,16 +1,24 @@
-package de.brightslearning.boersebackend.Dto;
+package de.brightslearning.boersebackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginDto implements UserDetails {
+    @JsonProperty("benutzername")
     private String benutzername;
-    private String password;
-    private List<GrantedAuthority> authorities;
+    @JsonProperty("passwort")
+    private String passwort;
+
+    private List<GrantedAuthority> authorities = new ArrayList<>();
 
 
     @Override
@@ -20,7 +28,7 @@ public class LoginDto implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return passwort;
     }
 
     @Override
