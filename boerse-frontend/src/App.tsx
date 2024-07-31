@@ -9,7 +9,8 @@ import TokenPage from "@/pages/TokenPage";
 import HandelnPage from "@/pages/HandelnPage";
 import EinstellungenPage from "@/pages/EinstellungenPage";
 import MyWallet from '@/components/MyWallet';
-import Layout from '@/components/Layout';
+import Layout from '@/components/Layout'; // Import Layout component
+import LearningPage from '@/components/LearningPage';
 import Error from "@/components/Error"; // Import Layout component
 
 function App() {
@@ -19,16 +20,7 @@ function App() {
         <ChakraProvider>
             <Routes>
                 <Route path="/">
-                    <Route
-                        index
-                        element={
-
-                            <HomePage/>
-
-                        }
-
-                    />
-
+                    <Route index element={<HomePage/>}/>
                 </Route>
                 <Route path="/current-price" element={<Aktien/>}/>
                 <Route path="/portfolio" element={<Portfolio/>}/>
@@ -38,6 +30,8 @@ function App() {
                 <Route path="/handeln" index element={<HandelnPage/>}/>
                 <Route path="/einstellungen" index element={<EinstellungenPage/>}/>
                 <Route path="/my-assets" element={<Layout title="My Wallet"><MyWallet userId={userId}/></Layout>}/>
+                <Route path="/learnings"
+                       element={<Layout title="Learnings"><LearningPage/></Layout>}/> {/* Add this line */}
                 <Route path="*" element={<Error/>}/>
             </Routes>
         </ChakraProvider>

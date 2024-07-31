@@ -6,9 +6,9 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 const dummyPortfolio = [
     { symbol: 'AAPL', menge: 5 },
     { symbol: 'COKE', menge: 4 },
-    { symbol: 'IBM', menge: 3 },
-    { symbol: 'NVDA', menge: 6 },
-    { symbol: 'TSLA', menge: 2 }
+    { symbol: 'IBM', menge: 3 }
+    //{ symbol: 'NVDA', menge: 6 }
+
 ];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
@@ -23,7 +23,7 @@ const MyWallet = () => {
                 const portfolioWithPrices = await Promise.all(
                     dummyPortfolio.map(async stock => {
                         const response = await axios.get(`http://localhost:8080/aktie/current-price/${stock.symbol}`);
-                        console.log(`Fetched price for ${stock.symbol}:`, response.data);
+                        //console.log(`Fetched price for ${stock.symbol}:`, response.data);
                         return { ...stock, durchschnittlicherKaufpreis: Number(response.data) };
                     })
                 );
