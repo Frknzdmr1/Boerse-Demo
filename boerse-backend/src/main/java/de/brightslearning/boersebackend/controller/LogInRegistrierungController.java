@@ -1,20 +1,20 @@
 package de.brightslearning.boersebackend.controller;
 
-import de.brightslearning.boersebackend.Dto.AuthResponseDto;
-import de.brightslearning.boersebackend.Dto.LoginDto;
-import de.brightslearning.boersebackend.Dto.RegisterDto;
+import de.brightslearning.boersebackend.dto.AuthResponseDto;
+import de.brightslearning.boersebackend.dto.LoginDto;
+import de.brightslearning.boersebackend.dto.RegisterDto;
 import de.brightslearning.boersebackend.configuration.JWTGenerator;
 import de.brightslearning.boersebackend.model.Benutzer;
 import de.brightslearning.boersebackend.model.UserRolle;
+
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
 import de.brightslearning.boersebackend.repository.UserRolleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,19 +29,18 @@ import java.util.UUID;
 @RequestMapping("/auth")
 public class LogInRegistrierungController {
 
-
-    private AuthenticationManager authenticationManager;
-    private BenutzerRepository benutzerRepository;
-    private UserRolleRepository userRolleRepository;
-    private PasswordEncoder passwordEncoder;
-    private JWTGenerator jwtGenerator;
+    private final BenutzerRepository benutzerRepository;
+    private final UserRolleRepository userRolleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTGenerator jwtGenerator;
 
 
     @Autowired
-    public LogInRegistrierungController(AuthenticationManager authenticationManager, BenutzerRepository benutzerRepository,
-                                        UserRolleRepository userRolleRepository, PasswordEncoder passwordEncoder,
+    public LogInRegistrierungController(BenutzerRepository benutzerRepository,
+                                        UserRolleRepository userRolleRepository,
+                                        PasswordEncoder passwordEncoder,
                                         JWTGenerator jwtGenerator) {
-        this.authenticationManager = authenticationManager;
+
         this.benutzerRepository = benutzerRepository;
         this.userRolleRepository = userRolleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -50,35 +49,27 @@ public class LogInRegistrierungController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.benutzername(),
-                        loginDto.password())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
+        try{
 
+        String token = jwtGenerator.generateToken(loginDto);
+        return ResponseEntity.ok(new AuthResponseDto(token));
+       }  catch (AuthenticationException ex){
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+       }
 
-
-//        Benutzer benutzer = benutzerRepository.findByBenutzername(loginDto.benutername()).get();
-//        if(benutzer == null || !passwordEncoder.matches(loginDto.password(), benutzer.getPasswort())){
-//            return new ResponseEntity<>("Der Benutzername oder das Passwort sind falsch!", HttpStatus.BAD_REQUEST);
-//        }
-
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        if(benutzerRepository.existsBenutzerByBenutzername(registerDto.username())){
-            return new ResponseEntity<>("Dieser Benutzername ist bereits vergeben", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<AuthResponseDto> register(@RequestBody RegisterDto registerDto){
+        if(Boolean.TRUE.equals(benutzerRepository.existsBenutzerByBenutzername(registerDto.benutzername()))){ //SonarLint mein das wäre besser.
+            return null;
         }
-        UserRolle userRolleUser = userRolleRepository.findByBezeichnung("USER").get();
+        UserRolle userRolleUser = userRolleRepository.findByBezeichnung("USER").orElseThrow();
         Benutzer benutzer = new Benutzer(
                 UUID.randomUUID(),
-                registerDto.username(),
+                registerDto.benutzername(),
                 registerDto.email(),
-                passwordEncoder.encode( registerDto.password()),
+                passwordEncoder.encode( registerDto.passwort()),
                 "STANDARD",
                 ZonedDateTime.now(),
                 ZonedDateTime.now(),
@@ -86,6 +77,15 @@ public class LogInRegistrierungController {
         );
 
         benutzerRepository.save(benutzer);
-        return new ResponseEntity<>("Benutzer wurde erfolgreich registriert", HttpStatus.OK);
+
+        String token = jwtGenerator.generateToken(new LoginDto(
+                benutzer.getBenutzername(),
+                benutzer.getPasswort(),
+                benutzer.getUserRollen().stream().map(
+                        rolle -> (GrantedAuthority) rolle::getBezeichnung
+                ).toList()
+        ));
+
+        return ResponseEntity.ok(new AuthResponseDto(token));
     }
 }
