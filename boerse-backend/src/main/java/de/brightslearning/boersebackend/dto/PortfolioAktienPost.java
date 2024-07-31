@@ -1,4 +1,4 @@
-package de.brightslearning.boersebackend.Dto;
+package de.brightslearning.boersebackend.dto;
 
 import java.math.BigDecimal;
 

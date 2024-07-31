@@ -1,8 +1,8 @@
 package de.brightslearning.boersebackend.service;
 
-import de.brightslearning.boersebackend.Dto.AktieDTO;
-import de.brightslearning.boersebackend.Dto.PortfolioAktienPost;
-import de.brightslearning.boersebackend.Dto.PortfolioDTO;
+import de.brightslearning.boersebackend.dto.AktieDTO;
+import de.brightslearning.boersebackend.dto.PortfolioAktienPost;
+import de.brightslearning.boersebackend.dto.PortfolioDTO;
 import de.brightslearning.boersebackend.model.Aktie;
 import de.brightslearning.boersebackend.model.Portfolio;
 import de.brightslearning.boersebackend.model.PortfolioAktie;
@@ -20,14 +20,22 @@ import java.util.UUID;
 @Service
 public class PortfolioService {
 
-    @Autowired
-    private PortfolioRepository portfolioRepository;
+    private final PortfolioRepository portfolioRepository;
+
+    private final PortfolioAktieRepository portfolioAktieRepository;
+
+    private final AktieRepository aktieRepository;
 
     @Autowired
-    private PortfolioAktieRepository portfolioAktieRepository;
-
-    @Autowired
-    private AktieRepository aktieRepository;
+    public PortfolioService(
+            PortfolioRepository portfolioRepository,
+            PortfolioAktieRepository portfolioAktieRepository,
+            AktieRepository aktieRepository
+    ){
+        this.portfolioRepository = portfolioRepository;
+        this.portfolioAktieRepository = portfolioAktieRepository;
+        this.aktieRepository = aktieRepository;
+    }
 
     public PortfolioAktie addStockToPortfolio(UUID portfolioId, PortfolioAktienPost portfolioAktie) {
         Portfolio portfolio = portfolioRepository.findById(portfolioId).orElseThrow(() -> new RuntimeException("Portfolio not found"));

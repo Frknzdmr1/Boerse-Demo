@@ -1,6 +1,6 @@
 package de.brightslearning.boersebackend.configuration;
 
-import de.brightslearning.boersebackend.Dto.LoginDto;
+import de.brightslearning.boersebackend.dto.LoginDto;
 import de.brightslearning.boersebackend.model.Benutzer;
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
 import io.jsonwebtoken.Claims;
