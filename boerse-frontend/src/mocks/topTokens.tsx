@@ -4,173 +4,65 @@ export const topTokens = [
         icon: "/images/crypto-icon-4.png",
         currencyFull: "Apple",
         currencyShort: "AAPL",
-        price: "€0.4831",
+        price: "€218.24 ",
         percent: 26.66,
         itemsCharts: [
-            {
-                name: "1",
-                price: 1000,
-            },
-            {
-                name: "2",
-                price: 1500,
-            },
-            {
-                name: "3",
-                price: 500,
-            },
-            {
-                name: "4",
-                price: 2500,
-            },
-            {
-                name: "5",
-                price: 2200,
-            },
-            {
-                name: "6",
-                price: 1400,
-            },
-            {
-                name: "7",
-                price: 1000,
-            },
-            {
-                name: "8",
-                price: 1500,
-            },
-            {
-                name: "9",
-                price: 500,
-            },
-            {
-                name: "10",
-                price: 2500,
-            },
-            {
-                name: "11",
-                price: 2200,
-            },
-            {
-                name: "12",
-                price: 1400,
-            },
+            { name: "1", price: 230.54 },
+            { name: "2", price: 234.4 },
+            { name: "3", price: 234.82 },
+            { name: "4", price: 228.88 },
+            { name: "5", price: 224.18 },
+            { name: "6", price: 224.31 },
+            { name: "7", price: 223.96 },
+            { name: "8", price: 225.01 },
+            { name: "9", price: 218.54 },
+            { name: "10", price: 217.49 },
+            { name: "11", price: 217.96 },
+            { name: "12", price: 218.24 },
         ],
     },
     {
         id: "1",
         icon: "/images/crypto-icon-3.png",
-        currencyFull: "Ethereum",
-        currencyShort: "ETH",
-        price: "€2,968.31",
-        percent: 15.42,
+        currencyFull: "Tesla",
+        currencyShort: "TSLA",
+        price: "€232.1",
+        percent: -6.83, // Prozentänderung für Tesla
         itemsCharts: [
-            {
-                name: "1",
-                price: 1500,
-            },
-            {
-                name: "2",
-                price: 1200,
-            },
-            {
-                name: "3",
-                price: 500,
-            },
-            {
-                name: "4",
-                price: 2000,
-            },
-            {
-                name: "5",
-                price: 3200,
-            },
-            {
-                name: "6",
-                price: 2400,
-            },
-            {
-                name: "7",
-                price: 1000,
-            },
-            {
-                name: "8",
-                price: 2500,
-            },
-            {
-                name: "9",
-                price: 1500,
-            },
-            {
-                name: "10",
-                price: 2500,
-            },
-            {
-                name: "11",
-                price: 2200,
-            },
-            {
-                name: "12",
-                price: 1800,
-            },
+            { name: "12.07.2024", price: 248.23 },
+            { name: "15.07.2024", price: 252.64 },
+            { name: "16.07.2024", price: 256.56 },
+            { name: "17.07.2024", price: 248.5 },
+            { name: "18.07.2024", price: 249.23 },
+            { name: "19.07.2024", price: 239.2 },
+            { name: "22.07.2024", price: 251.51 },
+            { name: "23.07.2024", price: 246.38 },
+            { name: "24.07.2024", price: 215.99 },
+            { name: "25.07.2024", price: 220.25 },
+            { name: "26.07.2024", price: 219.8 },
+            { name: "29.07.2024", price: 232.1 },
         ],
     },
     {
         id: "2",
         icon: "/images/crypto-icon-5.png",
-        currencyFull: "Solana",
-        currencyShort: "SOL",
+        currencyFull: "Google",
+        currencyShort: "GOOGL",
         price: "€132.38",
-        percent: -5.12,
+        percent: -8.52, // Prozentänderung für Google
         itemsCharts: [
-            {
-                name: "1",
-                price: 600,
-            },
-            {
-                name: "2",
-                price: 1500,
-            },
-            {
-                name: "3",
-                price: 2500,
-            },
-            {
-                name: "4",
-                price: 1200,
-            },
-            {
-                name: "5",
-                price: 2800,
-            },
-            {
-                name: "6",
-                price: 1900,
-            },
-            {
-                name: "7",
-                price: 2400,
-            },
-            {
-                name: "8",
-                price: 2000,
-            },
-            {
-                name: "9",
-                price: 2200,
-            },
-            {
-                name: "10",
-                price: 1700,
-            },
-            {
-                name: "11",
-                price: 1300,
-            },
-            {
-                name: "12",
-                price: 900,
-            },
+            { name: "12.07.2024", price: 185.07 },
+            { name: "15.07.2024", price: 186.53 },
+            { name: "16.07.2024", price: 183.92 },
+            { name: "17.07.2024", price: 181.02 },
+            { name: "18.07.2024", price: 177.69 },
+            { name: "19.07.2024", price: 177.66 },
+            { name: "22.07.2024", price: 181.67 },
+            { name: "23.07.2024", price: 181.79 },
+            { name: "24.07.2024", price: 172.63 },
+            { name: "25.07.2024", price: 167.28 },
+            { name: "26.07.2024", price: 167.0 },
+            { name: "29.07.2024", price: 169.53 },
         ],
     },
 ];
