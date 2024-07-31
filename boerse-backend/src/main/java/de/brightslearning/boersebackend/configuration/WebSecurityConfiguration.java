@@ -9,32 +9,33 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import java.util.List;
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration {
 
 
-    private JwtAuthEntryPoint authEntryPoint;
+    private final JwtAuthEntryPoint authEntryPoint;
 
-    private SecurityService securityService;
+
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    public WebSecurityConfiguration( SecurityService securityService, JwtAuthEntryPoint authEntryPoint){
-        this.securityService = securityService;
+    public WebSecurityConfiguration(
+                                     JwtAuthEntryPoint authEntryPoint,
+                                     JWTAuthenticationFilter jwtAuthenticationFilter){
         this.authEntryPoint = authEntryPoint;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -47,15 +48,11 @@ public class WebSecurityConfiguration {
         // Zeige den default logIn an: - siehe https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html for adaptions
 
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(
-                        sessionAuthStrategy ->
-                                sessionAuthStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login", "/register", "/h2-console/**",
+                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**",
                                 "/aktie/**", "/aktie/prev/**",
                                 "/aktie/current-price/**", "/portfolio/**")
                         .permitAll()
@@ -68,13 +65,14 @@ public class WebSecurityConfiguration {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-                .httpBasic(withDefaults -> {
-                });
+                .httpBasic(withDefaults());
 
         // Definiere die Landingpage nach dem Logout:
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         // Enable H2-DB support
-        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
+        http.headers(headers -> headers.frameOptions(
+                HeadersConfigurer.FrameOptionsConfig::sameOrigin
+        ));
 
         return http.build();
     }
@@ -85,10 +83,5 @@ public class WebSecurityConfiguration {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
-    @Bean
-    JWTAuthenticationFilter jwtAuthenticationFilter(){
-        return new JWTAuthenticationFilter();
-    }
 
 }
