@@ -64,6 +64,7 @@ const BalanceToken = ({tickerDetails, closingPrices}) => {
 
 const firstPrice = closingPrices[0].price;
 const lastPrice = closingPrices[closingPrices.length - 1].price;
+console.log(closingPrices[0])
 
 const totalPercentageChange = ((lastPrice - firstPrice) / firstPrice) * 100;
 

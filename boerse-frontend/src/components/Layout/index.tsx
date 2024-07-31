@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
                      onClick={() => setVisible(!visible)}
             />
             <div className="">
-                <div className="max-w-[80rem] mx-auto pt-16 px-6 pb-10 lg:px-4 md:pt-20 md:px-4 md:pb-8"> {/* Adjusted padding */}
+                <div className="max-w-[80rem] mx-auto pt-28 px-6 pb-10 lg:px-4 md:pt-24 md:px-4 md:pb-8"> {/* Adjusted padding */}
                     <Header
                         visible={visible}
                         title={title}

@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import BalanceToken from "@/pages/TokenPage/BalanceToken";
+import Loading from "@/components/Loading";
 
 const TokenPage = () => {
     const {symbol} = useParams();
@@ -47,7 +48,7 @@ const TokenPage = () => {
     }, [symbol]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return<Loading/>;
     }
 
     if (!tickerDetails) {

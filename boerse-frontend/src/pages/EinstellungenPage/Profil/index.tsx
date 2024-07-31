@@ -5,22 +5,20 @@ import Details from "../Details";
 import axios from "axios";
 
 const Profil = () => {
-    const [passwort, setPasswort] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [location, setLocation] = useState("");
     const [bio, setBio] = useState("");
     const [website, setWebsite] = useState("");
     const [social, setSocial] = useState("");
-    const userId = "6953623e-2077-4adc-bbdd-628b762a2603";
+    const userId = "f3c0c900-dca8-4f03-b045-446d7ae117b2";
 
     useEffect(() => {
-        // Beispiel: Benutzerdaten laden, wenn eine userId vorhanden ist
+
         if (userId) {
             axios.get(`http://localhost:8080/benutzer/${userId}`)
                 .then(response => {
                     const userData = response.data;
-                    setPasswort(userData.passwort);
                     setUsername(userData.benutzername);
                     setEmail(userData.email);
                     setLocation(userData.location);
@@ -38,7 +36,7 @@ const Profil = () => {
         const userData = {
             benutzername: username,
             email,
-            passwort,
+
 
         };
          console.log('UserData:', userData);
@@ -83,21 +81,13 @@ const Profil = () => {
                 <div className="flex space-x-6 md:block md:space-x-0 md:space-y-6">
                     <Field
                         className="flex-1"
-                        type="password"
-                        label="Passwort"
-                        placeholder="Name"
-                        value={passwort}
-                        onChange={(e) => setPasswort(e.target.value)}
-                        required
-                    />
-                    <Field
-                        className="flex-1"
                         label="Vollständiger Name"
                         placeholder="Vollständiger Name"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
+
                 </div>
                 <div className="flex space-x-6 md:block md:space-x-0 md:space-y-6">
                     <Field

@@ -37,7 +37,7 @@ const TopTokens = () => {
             tooltip="Tooltip top Tokens"
             seeAllUrl="/"
         >
-            <div className="-mx-3 pt-6 space-y-1 md:-mx-2">
+            <div className="-mx-3 pt-6 space-y-1 md:-mx-2 mb-4">
                 {topTokens.map((item) => (
                     <Link
                         className="flex items-center h-20 px-3 rounded-2xl border border-transparent transition-colors hover:border-theme-stroke md:px-2"
@@ -53,7 +53,7 @@ const TopTokens = () => {
                                 alt=""
                             />
                         </div>
-                        <div className="min-w-[6rem]">
+                        <div className="min-w-[6rem] flex-1">
                             <div className="text-base-1s">
                                 {item.currencyFull}
                             </div>
@@ -61,7 +61,7 @@ const TopTokens = () => {
                                 {item.currencyShort}
                             </div>
                         </div>
-                        <div className="w-18 h-9 mx-auto md:w-16">
+                        <div className="max-w-[4.5rem] h-9 mx-auto md:w-16 flex-1">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
                                     width={300}
@@ -88,7 +88,7 @@ const TopTokens = () => {
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="min-w-[5.5rem] -mb-1.5 text-right">
+                        <div className="min-w-[5.5rem] -mb-1.5 text-right flex-1">
                             <div className="text-base-1s">{item.price}</div>
                             <Percent
                                 className="text-base-2"

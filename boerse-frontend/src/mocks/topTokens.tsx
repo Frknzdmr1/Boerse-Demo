@@ -1,11 +1,11 @@
 export const topTokens = [
     {
         id: "0",
-        icon: "/images/crypto-icon-4.png",
-        currencyFull: "Apple",
+        icon: "/images/apple.png",
+        currencyFull: "Apple Inc",
         currencyShort: "AAPL",
         price: "€218.24 ",
-        percent: 26.66,
+        percent: 28.66,
         itemsCharts: [
             { name: "1", price: 230.54 },
             { name: "2", price: 234.4 },
@@ -23,11 +23,11 @@ export const topTokens = [
     },
     {
         id: "1",
-        icon: "/images/crypto-icon-3.png",
-        currencyFull: "Tesla",
+        icon: "/images/tesla.png",
+        currencyFull: "Tesla, Inc. Common Stock",
         currencyShort: "TSLA",
         price: "€232.1",
-        percent: -6.83, // Prozentänderung für Tesla
+        percent: 22.83,
         itemsCharts: [
             { name: "12.07.2024", price: 248.23 },
             { name: "15.07.2024", price: 252.64 },
@@ -46,10 +46,10 @@ export const topTokens = [
     {
         id: "2",
         icon: "/images/crypto-icon-5.png",
-        currencyFull: "Google",
+        currencyFull: "Alphabet Inc. Class A Common Stock",
         currencyShort: "GOOGL",
-        price: "€132.38",
-        percent: -8.52, // Prozentänderung für Google
+        price: "€170.38",
+        percent: 4,
         itemsCharts: [
             { name: "12.07.2024", price: 185.07 },
             { name: "15.07.2024", price: 186.53 },
