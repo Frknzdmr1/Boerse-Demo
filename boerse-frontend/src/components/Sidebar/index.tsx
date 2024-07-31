@@ -1,4 +1,3 @@
-// Sidebar.js
 import { Link } from "react-router-dom";
 import { useColorMode } from "@chakra-ui/react";
 import Image from "@/components/Image";
@@ -76,6 +75,12 @@ const Sidebar = ({ className, visible, onClick }: SidebarProps) => {
                             visible={visible}
                         />
                     ))}
+                    {/*<NavLink*/}
+                    {/*    title="Learnings"*/}
+                    {/*    icon="book" // Add an appropriate icon here*/}
+                    {/*    url="/learnings"*/}
+                    {/*    visible={visible}*/}
+                    {/*/>*/}
                 </div>
                 {visible && (
                     <div className="hidden flex-col mt-6 pt-4 border-t border-theme-stroke space-y-1 md:flex">
