@@ -4,7 +4,6 @@ import Layout from "@/components/Layout";
 
 import TopTokens from "./TopMarken";
 import NeuesteAktionen from "./NeuesteAktionen";
-import Wallet from "@/components/Wallet";
 import Learnings from "@/pages/HomePage/Learnings";
 
 const HomePage = () => {
@@ -13,7 +12,7 @@ const HomePage = () => {
     return (
         <Layout title="Dashboard">
             <div className="space-y-2">
-                <Wallet />
+
 
                 <div className="flex space-x-2 lg:block lg:space-x-0 lg:space-y-2">
                     <TopTokens />
