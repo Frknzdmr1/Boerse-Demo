@@ -44,6 +44,17 @@ public class Benutzer {
             inverseJoinColumns = @JoinColumn( name = "role_id", referencedColumnName = "id"))
     private List<UserRolle> userRollen = new ArrayList<>();
 
+    //neue Felder
+//    private String profilbild;
+//
+//    private String standort;
+//
+//    private String bio;
+//
+//    private String webseite;
+//
+//    private String twitter;
+
     @PrePersist
     protected void onCreate() {
         erstelltAm = ZonedDateTime.now();
@@ -53,4 +64,6 @@ public class Benutzer {
     protected void onUpdate() {
         aktualisiertAm = ZonedDateTime.now();
     }
+
+
 }

@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer, TooltipProps} from "recharts";
 import axios from "axios";
-import moment from "moment";
 import {useColorMode} from "@chakra-ui/color-mode";
 import {Card} from "@chakra-ui/react";
 import CurrencyFormat from "@/components/CurrencyFormat";
@@ -63,6 +62,12 @@ const BalanceToken = ({tickerDetails, closingPrices}) => {
         price: closingObject.price,
     }));
 
+const firstPrice = closingPrices[0].price;
+const lastPrice = closingPrices[closingPrices.length - 1].price;
+console.log(closingPrices[0])
+
+const totalPercentageChange = ((lastPrice - firstPrice) / firstPrice) * 100;
+
     return (
         <Card title="Wallet"
               arrowTitle
@@ -72,10 +77,10 @@ const BalanceToken = ({tickerDetails, closingPrices}) => {
             <div className="flex items-end md:mt-4">
                 <CurrencyFormat
                     className="text-h1 md:text-h3"
-                    value={3200.8}
+                    value={chartData[chartData.length-1].price}
                     currency="€"
                 />
-                <Percent className="ml-1 text-title-1s" value={85.66}/>
+                <Percent className="ml-1 text-title-1s" value={Number(totalPercentageChange.toFixed(2))}/>
             </div>
             <div className="h-[14rem] -mb-2">
                 <h2 className="text-title-1m mt-2">{tickerDetails.name} {tickerDetails.ticker}</h2>

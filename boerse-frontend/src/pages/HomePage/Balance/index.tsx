@@ -49,7 +49,7 @@ const Balance = ({userId}: { userId: string }) => {
     const [portfolioChange, setPortfolioChange] = useState<number>(0);
 
     const [newStockSymbol, setNewStockSymbol] = useState('');
-    const [newStockQuantity, setNewStockQuantity] = useState(0);
+    const [newStockQuantity, setNewStockQuantity] = useState("");
     const [portfolio, setPortfolio] = useState<any[]>([]);
 
     useEffect(() => {
@@ -132,7 +132,7 @@ const Balance = ({userId}: { userId: string }) => {
 
     return (
         <Card
-            title="Wallet"
+            title="Portfoliowert"
             arrowTitle
             option={time}
             setOption={setTime}
@@ -202,22 +202,24 @@ const Balance = ({userId}: { userId: string }) => {
             <Divider mt={6} mb={6}/>
 
             <Box mt={6}>
-                <Stack spacing={4}>
+                <Stack spacing={4} alignItems="center" justifyContent="center">
                     <Input
                         type="text"
                         value={newStockSymbol}
                         onChange={(e) => setNewStockSymbol(e.target.value.toUpperCase())}
-                        placeholder="Enter stock symbol"
+                        placeholder="Aktienticker"
                         variant="filled"
+                          w="50%"
                     />
                     <Input
                         type="number"
                         value={newStockQuantity}
                         onChange={(e) => setNewStockQuantity(Number(e.target.value))}
-                        placeholder="Enter quantity"
+                        placeholder="Menge"
                         variant="filled"
+                          w="50%"
                     />
-                    <Button onClick={addStockToPortfolio} colorScheme="teal">Add Stock to Portfolio</Button>
+                    <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile hinzufügen</Button>
                 </Stack>
                 <Box mt={8}>
                     <Heading as="h3" size="md" mb={4}>Portfolio</Heading>
