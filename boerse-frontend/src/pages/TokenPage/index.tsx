@@ -37,6 +37,7 @@ const TokenPage = () => {
                     throw new Error('Failed to fetch ticker details');
                 }
                 setTickerDetails(response.data.results);
+                console.log(response.data.results)
             } catch (error) {
                 console.error('Error fetching ticker details:', error);
             } finally {

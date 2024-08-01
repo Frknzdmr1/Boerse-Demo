@@ -5,6 +5,7 @@ import Layout from "@/components/Layout";
 import TopTokens from "./TopMarken";
 import NeuesteAktionen from "./NeuesteAktionen";
 import Wallet from "@/components/Wallet";
+import Learnings from "@/pages/HomePage/Learnings";
 
 const HomePage = () => {
 
@@ -19,6 +20,7 @@ const HomePage = () => {
                 </div>
                 <div className="flex -mx-1 lg:block lg:mx-0 lg:space-y-2">
                     <NeuesteAktionen/>
+                    <Learnings />
                 </div>
             </div>
         </Layout>

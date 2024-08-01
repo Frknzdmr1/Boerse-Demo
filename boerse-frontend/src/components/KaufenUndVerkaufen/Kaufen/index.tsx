@@ -23,25 +23,14 @@ const Kaufen = () => {
                     Ethereum
                     <span className="ml-2 text-theme-tertiary">ETH</span>
                 </Option>
-                <Option
-                    classTitle="2xl:!mr-3"
-                    image="/images/crypto-icon-2.png"
-                    stroke
-                >
-                    <div className="text-theme-secondary">
-                        Sie bekommen{" "}
-                        <span className="text-theme-primary">0,014701 ETH</span>{" "}
-                        <br></br>für{" "}
-                        <span className="text-theme-primary">EUR€48.16</span>
-                    </div>
-                </Option>
+
                 <Option
                     classTitle="2xl:!mr-3"
                     title="Zahlen Sie mit"
                     color="bg-theme-green"
                     stroke
                 >
-                    EUR Saldo
+                    EUR {Saldo}
                 </Option>
                 <Option
                     classTitle="2xl:!mr-3"

@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import  {useState} from "react";
 import axios from 'axios';
 import Icon from "@/components/Icon";
-import {Button, Text} from "@chakra-ui/react";
+import {Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 
 const Search = () => {
@@ -9,7 +9,7 @@ const Search = () => {
     const [price, setPrice] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         if (!symbol.trim()) {
@@ -32,7 +32,7 @@ const Search = () => {
         }
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: { target: { value: string; }; }) => {
         setSymbol(e.target.value.toUpperCase());
     };
 

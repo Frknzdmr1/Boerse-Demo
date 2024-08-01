@@ -1,6 +1,6 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
-import {ChakraProvider} from '@chakra-ui/react';
+import { Route, Routes } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
 import HomePage from '@/pages/HomePage';
 import Aktien from '@/components/Aktien';
 import Portfolio from '@/components/Portfolio';
@@ -11,7 +11,9 @@ import EinstellungenPage from "@/pages/EinstellungenPage";
 import MyWallet from '@/components/MyWallet';
 import Layout from '@/components/Layout'; // Import Layout component
 import LearningPage from '@/components/LearningPage';
-import Error from "@/components/Error"; // Import Layout component
+import Error from "@/components/Error";
+import LoginPage from "@/pages/LoginPage";
+import RegistrierungPage from "@/pages/RegistrierungPage"; // Import Layout component
 
 function App() {
     const userId = "YOUR_USER_ID"; // Replace with actual user ID
@@ -33,6 +35,8 @@ function App() {
                 <Route path="/learnings"
                        element={<Layout title="Learnings"><LearningPage/></Layout>}/> {/* Add this line */}
                 <Route path="*" element={<Error/>}/>
+                <Route path="/sign-up" element={<LoginPage />}/>
+                <Route path="/registrierung" element={<RegistrierungPage />}/>
             </Routes>
         </ChakraProvider>
     );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TabsSame from "@/components/TabsSame";
-import Buy from "./Kaufen";
-import Sell from "./Verkaufen";
+import Kaufen from "./Kaufen";
+import Verkaufen from "./Verkaufen";
 
 //type BuyAndSellProps = {};
 
@@ -27,8 +27,8 @@ const KaufenUndVerkaufen = () => {
                 value={type}
                 setValue={setType}
             />
-            {type === "kaufen" && <Buy />}
-            {type === "verkaufen" && <Sell />}
+            {type === "kaufen" && <Kaufen />}
+            {type === "verkaufen" && <Verkaufen />}
         </div>
     );
 };

@@ -27,7 +27,7 @@ export const Login = ({
                 {signIn ? "Sie haben noch kein Konto?" : "Sie sind bereits Mitglied?"}&nbsp;
                 <Link
                     className="text-theme-primary transition-colors hover:text-primary-1"
-                    to={signIn ? "/register" : "/login"}
+                    to={signIn ? "/registrierung" : "/sign-up"}
                 >
                     {signIn ? "Registrieren" : "Anmelden"}
                 </Link>
@@ -40,7 +40,7 @@ export const Login = ({
                     <div className="mb-10 2xl:mb-8">
                         <Link
                             className="absolute top-10 left-10 z-2 2xl:top-8 2xl:right-8 lg:top-10 lg:right-10 md:static md:inline-block md:mb-5"
-                            to="/"
+                            to="/registrierung"
                         >
                             <Image
                                 className="w-10 opacity-100"

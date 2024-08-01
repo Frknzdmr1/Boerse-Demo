@@ -3,11 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { useColorMode } from "@chakra-ui/react";
 import Icon from "@/components/Icon";
 import Modal from "@/components/Modal";
-import Trade from "@/components/Trade";
+import Trade from "@/components/Handeln";
 import User from "@/components/User";
 import Image from "@/components/Image";
 import Meldungen from "./Meldungen";
 import Search from "./Search";
+import LoginButton from "@/components/LoginButton";
 
 type HeaderProps = {
     title: string;
@@ -64,6 +65,7 @@ const Header = ({ title, visible, showMenu, onClickBurger }: HeaderProps) => {
                         {title}
                     </button>
                     <div className="flex items-center ml-auto space-x-6">
+                        <LoginButton />
                         <button
                             className="btn-primary md:hidden"
                             onClick={() => setVisibleModalTrade(true)}
