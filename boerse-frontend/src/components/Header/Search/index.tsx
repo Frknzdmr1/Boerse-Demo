@@ -44,7 +44,7 @@ const Search = () => {
                     type="text"
                     value={symbol}
                     onChange={handleInputChange}
-                    placeholder="Enter stock symbol"
+                    placeholder="Aktienticker"
                     required
                     autoFocus
                     aria-label="Stock Symbol Input"
@@ -67,7 +67,7 @@ const Search = () => {
                     </div>
                 </div>
                 {error && (
-                    <Text fontSize="xl" color="red.500">{error}</Text>
+                    <Text fontSize="xl" marginLeft="2rem" color="red.500">{error}</Text>
                 )}
             </div>
         </form>

@@ -96,7 +96,7 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
                     type="text"
                     value={newStockSymbol}
                     onChange={(e) => setNewStockSymbol(e.target.value.toUpperCase())}
-                    placeholder="Enter stock symbol"
+                    placeholder="Aktienticker"
                     variant="filled"
                 />
                 <Input

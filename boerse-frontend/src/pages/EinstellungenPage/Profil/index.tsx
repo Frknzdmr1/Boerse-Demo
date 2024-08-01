@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Field from "@/components/Field";
 import Image from "@/components/Image";
 import Details from "../Details";
@@ -11,7 +11,8 @@ const Profil = () => {
     const [bio, setBio] = useState("");
     const [website, setWebsite] = useState("");
     const [social, setSocial] = useState("");
-    const userId = "f3c0c900-dca8-4f03-b045-446d7ae117b2";
+    const [updateStatus, setUpdateStatus] = useState(null);
+    const userId = "b105fa3b-e251-4b89-9392-44b40ec5e6fa";
 
     useEffect(() => {
 
@@ -39,12 +40,13 @@ const Profil = () => {
 
 
         };
-         console.log('UserData:', userData);
+        console.log('UserData:', userData);
 
         if (userId) {
             axios.put(`http://localhost:8080/benutzer/${userId}`, userData)
                 .then(response => {
                     console.log('Profile updated successfully');
+                    setUpdateStatus('success');
                 })
                 .catch(error => {
                     console.error('Error updating profile:', error);
@@ -73,8 +75,10 @@ const Profil = () => {
                         <button className="btn-gray shrink-0 mr-12">
                             Change avatar
                         </button>
-                        <div className="max-w-[calc(50%-0.75rem)] ml-auto text-caption-2m text-theme-tertiary md:hidden">
-                            Aktualisieren Sie Ihren Avatar, indem Sie auf das unten dargestellte Bild klicken. Empfohlene Größe 288x288 px, nur im PNG- oder JPG-Format.
+                        <div
+                            className="max-w-[calc(50%-0.75rem)] ml-auto text-caption-2m text-theme-tertiary md:hidden">
+                            Aktualisieren Sie Ihren Avatar, indem Sie auf das unten dargestellte Bild klicken.
+                            Empfohlene Größe 288x288 px, nur im PNG- oder JPG-Format.
                         </div>
                     </div>
                 </div>
@@ -136,6 +140,11 @@ const Profil = () => {
                 </div>
             </div>
             <button onClick={saveProfile} className="btn-secondary mt-6 md:w-full">Save</button>
+            {updateStatus === 'success' && (
+                <div className="text-green-600">
+                    Profil erfolgreich aktualisiert!
+                </div>
+            )}
         </Details>
     );
 };

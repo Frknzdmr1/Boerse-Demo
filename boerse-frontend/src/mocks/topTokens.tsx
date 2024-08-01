@@ -45,7 +45,7 @@ export const topTokens = [
     },
     {
         id: "2",
-        icon: "/images/crypto-icon-5.png",
+        icon: "/images/google.png",
         currencyFull: "Alphabet Inc. Class A Common Stock",
         currencyShort: "GOOGL",
         price: "€170.38",

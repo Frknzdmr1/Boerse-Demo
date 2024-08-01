@@ -7,7 +7,7 @@ export const navigation = [
     },
     {
         id: "1",
-        title: "My wallet",
+        title: "Mein Portfolio",
         icon: "wallet",
         url: "/my-assets",
     },
@@ -19,7 +19,7 @@ export const navigation = [
     },
     {
         id: "3",
-        title: "Learnings",
+        title: "Lernhilfe",
         icon: "star",
         url: "/learnings",
     },

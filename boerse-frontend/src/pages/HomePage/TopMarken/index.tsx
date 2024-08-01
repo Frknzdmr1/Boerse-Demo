@@ -33,7 +33,7 @@ const TopTokens = () => {
     return (
         <Card
             className="flex-1"
-            title="Rangliste"
+            title="Top Aktien"
             tooltip="Tooltip top Tokens"
             seeAllUrl="/"
         >

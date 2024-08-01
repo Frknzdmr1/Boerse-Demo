@@ -48,7 +48,7 @@ const MyWallet = () => {
 
     return (
         <Box p={8} maxW="container.md" mx="auto">
-            <Heading as="h2" size="lg" mb={4}>My Wallet</Heading>
+            <Heading as="h2" size="lg" mb={4}>Portfoliowert</Heading>
             <Box>
                 {portfolio.portfolioAktien.map((stock, index) => (
                     <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
