@@ -55,7 +55,7 @@ const Profil = () => {
     };
 
     return (
-        <Details title="Profil" image="/images/avatar.png">
+        <Details title="Profil" image="">
             <div className="space-y-6">
                 <div className="">
                     <div className="mb-1 text-base-2">Avatar</div>
