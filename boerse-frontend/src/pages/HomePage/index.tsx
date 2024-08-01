@@ -5,7 +5,7 @@ import Layout from "@/components/Layout";
 import TopTokens from "./TopMarken";
 import NeuesteAktionen from "./NeuesteAktionen";
 import Learnings from "@/pages/HomePage/Learnings";
-import Aktien from "@/components/Aktien";
+import Balance from "@/pages/HomePage/Balance";
 
 const HomePage = () => {
 
@@ -13,7 +13,7 @@ const HomePage = () => {
     return (
         <Layout title="Dashboard">
             <div className="space-y-2">
-                <Aktien />
+                <Balance  userId="1" />
 
 
                 <div className="flex space-x-2 lg:block lg:space-x-0 lg:space-y-2">
