@@ -28,40 +28,41 @@ interface StockResult {
 }
 
 
-const TopTokens = () => {
+const Preise = () => {
 
     return (
         <Card
             className="flex-1"
-            title="Top Aktien"
-            tooltip="Tooltip top Tokens"
+            title="Preise"
+            tooltip="Eine Liste mit allen Preisen"
             seeAllUrl="/"
         >
-            <div className="-mx-3 pt-6 space-y-1 md:-mx-2 mb-4">
+            <div className="-mx-3 pt-6 space-y-1 md:-mx-2">
                 {topTokens.map((item) => (
-                    <Link
-                        className="flex items-center h-20 px-3 rounded-2xl border border-transparent transition-colors hover:border-theme-stroke md:px-2"
+                    <div
+                        className="flex justify-between items-center h-20 px-3 rounded-2xl border border-transparent transition-all hover:border-theme-stroke hover:shadow-[0_0_0.875rem_-0.25rem_rgba(0,0,0,0.05),0_2rem_3rem_-0.5rem_rgba(0,0,0,0.05)] md:h-18 md:px-2"
                         key={item.id}
-                        to={`/token/${item.currencyShort}`}
                     >
-                        <div className="mr-5 md:mr-2">
-                            <Image
-                                className="crypto-logo w-10 scale-[1.02]"
-                                src={item.icon}
-                                width={40}
-                                height={40}
-                                alt=""
-                            />
-                        </div>
-                        <div className="min-w-[6rem] flex-1">
-                            <div className="text-base-1s">
-                                {item.currencyFull}
+                        <div className="flex items-center w-44 md:w-auto md:grow">
+                            <div className="mr-4">
+                                <Image
+                                    className="crypto-logo w-10 scale-[1.02]"
+                                    src={item.icon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                />
                             </div>
-                            <div className="text-caption-2 text-theme-secondary opacity-75">
-                                {item.currencyShort}
+                            <div className="grow">
+                                <div className="text-base-1s">
+                                    {item.currencyFull}
+                                </div>
+                                <div className="text-caption-2 text-theme-secondary opacity-75 dark:opacity-100">
+                                    {item.currencyShort}
+                                </div>
                             </div>
                         </div>
-                        <div className="max-w-[4.5rem] h-9 mx-auto md:w-16 flex-1">
+                        <div className="shrink-0 w-20 h-9 mx-4 2xl:hidden lg:block md:hidden">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
                                     width={300}
@@ -88,18 +89,29 @@ const TopTokens = () => {
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="min-w-[5.5rem] -mb-1.5 text-right flex-1">
-                            <div className="text-base-1s">{item.price}</div>
+                        <div className="shrink-0 w-24 text-base-1s md:hidden">
+                            {item.price}
+                        </div>
+                        <div className="shrink-0 w-24 md:hidden">
                             <Percent
                                 className="text-base-2"
                                 value={item.percent}
                             />
                         </div>
-                    </Link>
+                        <div className="shrink-0">
+                            <Link className="btn-gray h-10" to={`/token/${item.currencyShort}`}>
+                                Kaufen
+                            </Link>
+                        </div>
+
+
+                    </div>
+
                 ))}
+
             </div>
         </Card>
     );
 };
 
-export default TopTokens;
+export default Preise;

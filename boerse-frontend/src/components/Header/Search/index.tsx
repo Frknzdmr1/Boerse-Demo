@@ -44,7 +44,7 @@ const Search = () => {
                     type="text"
                     value={symbol}
                     onChange={handleInputChange}
-                    placeholder="Enter stock symbol"
+                    placeholder="Aktienticker"
                     required
                     autoFocus
                     aria-label="Stock Symbol Input"
@@ -57,7 +57,7 @@ const Search = () => {
 
             <div className="pt-3 pb-6 border-t border-theme-stroke">
                 <div className="mb-3">
-                    <div className="px-8 py-3 text-caption-1 text-theme-secondary md:px-4">
+                    <div className="px-8 py-3 text-caption-1 text-theme-secondary text-lg md:px-4">
                         Aktueller Preis für
                         {symbol && (
                             <Link to={`http://localhost:5173/token/${symbol}`} className="hover:text-theme-primary">
@@ -67,7 +67,7 @@ const Search = () => {
                     </div>
                 </div>
                 {error && (
-                    <Text fontSize="xl" color="red.500">{error}</Text>
+                    <Text fontSize="xl" marginLeft="2rem" color="red.500">{error}</Text>
                 )}
             </div>
         </form>

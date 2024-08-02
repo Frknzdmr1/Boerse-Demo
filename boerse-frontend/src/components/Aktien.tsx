@@ -25,7 +25,7 @@ const Aktien = () => {
                 type="text"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                placeholder="Enter stock symbol"
+                placeholder="Aktienticker"
                 mb={4}
             />
             <Button onClick={fetchCurrentPrice} colorScheme="teal" mb={4}>Fetch Current Price</Button>

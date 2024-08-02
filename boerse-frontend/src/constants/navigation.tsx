@@ -7,19 +7,19 @@ export const navigation = [
     },
     {
         id: "1",
-        title: "My wallet",
+        title: "Mein Portfolio",
         icon: "wallet",
         url: "/my-assets",
     },
     {
         id: "2",
-        title: "Trade",
+        title: "Handeln",
         icon: "trade",
-        url: "/trade",
+        url: "/handeln",
     },
     {
         id: "3",
-        title: "Learnings",
+        title: "Lernhilfe",
         icon: "star",
         url: "/learnings",
     },
