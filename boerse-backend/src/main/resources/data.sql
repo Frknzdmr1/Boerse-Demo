@@ -37,3 +37,7 @@ INSERT INTO beobachtungslisten (id, benutzer_id, name, erstellt_am, aktualisiert
 INSERT INTO beobachtungslisten_aktien (id, beobachtungsliste_id, aktie_id, hinzugefuegt_am) VALUES
                                                                                                 (RANDOM_UUID(), (SELECT id FROM beobachtungslisten WHERE name = 'Tech Stocks'), (SELECT id FROM aktien WHERE symbol = 'AAPL'), NOW()),
                                                                                                 (RANDOM_UUID(), (SELECT id FROM beobachtungslisten WHERE name = 'Favorite Stocks'), (SELECT id FROM aktien WHERE symbol = 'GOOGL'), NOW());
+INSERT INTO guthaben (id, kontostand, zuletzt_aktualisiert, benutzer_id)
+VALUES
+    (RANDOM_UUID(), 50000.00, NOW(), (SELECT id FROM benutzer WHERE benutzername = 'user1')),
+    (RANDOM_UUID(), 50000.00, NOW(), (SELECT id FROM benutzer WHERE benutzername = 'user2'));

@@ -14,7 +14,7 @@ import LearningPage from '@/components/LearningPage';
 import Error from "@/components/Error"; // Import Layout component
 
 function App() {
-    const userId = "YOUR_USER_ID"; // Replace with actual user ID
+    const userId = "bd159b34-852c-48d6-b64d-78da79e3a9a7"; // Replace with actual user ID
 
     return (
         <ChakraProvider>

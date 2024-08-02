@@ -39,7 +39,12 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = ({userId}: { userId: string }) => {
+type BalanceProps = {
+    userId: string;
+    balance: number; // Assuming balance is of type number
+};
+
+const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
     const [time, setTime] = useState(duration[0]);
     const {colorMode} = useColorMode();
     const isDarkMode = colorMode === "dark";
@@ -209,7 +214,7 @@ const Balance = ({userId}: { userId: string }) => {
                         onChange={(e) => setNewStockSymbol(e.target.value.toUpperCase())}
                         placeholder="Aktienticker"
                         variant="filled"
-                          w="50%"
+                        w="50%"
                     />
                     <Input
                         type="number"
@@ -217,12 +222,12 @@ const Balance = ({userId}: { userId: string }) => {
                         onChange={(e) => setNewStockQuantity(Number(e.target.value))}
                         placeholder="Menge"
                         variant="filled"
-                          w="50%"
+                        w="50%"
                     />
-                    <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile hinzufügen</Button>
+                    <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile kaufen</Button>
                 </Stack>
                 <Box mt={8}>
-                    <Heading as="h3" size="md" mb={4}>Portfolio</Heading>
+                    <Heading as="h3" size="md" mb={4}>Guthaben: {balance}€</Heading>
                     {portfolio.map((stock, index) => (
                         <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
                             <Text>{stock.symbol}: {stock.menge} shares @
