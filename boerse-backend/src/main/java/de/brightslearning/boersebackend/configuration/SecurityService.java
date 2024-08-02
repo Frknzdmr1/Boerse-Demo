@@ -34,9 +34,9 @@ public class SecurityService implements UserDetailsService {
         );
 
         return new User(
-              benutzer.getBenutzername(),
-              benutzer.getPasswort(),
-              mapBenutzerRollenToAuthorities(benutzer.getUserRollen())
+                benutzer.getBenutzername(),
+                benutzer.getPasswort(),
+                mapBenutzerRollenToAuthorities(benutzer.getUserRollen())
         );
     }
 
