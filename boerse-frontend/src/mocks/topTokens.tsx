@@ -1,3 +1,4 @@
+
 export const topTokens = [
     {
         id: "0",
@@ -5,7 +6,9 @@ export const topTokens = [
         currencyFull: "Apple Inc",
         currencyShort: "AAPL",
         price: "€218.24 ",
-        percent: 28.66,
+        percent: calculatePercentChange([
+            230.54, 234.4, 234.82, 228.88, 224.18, 224.31, 223.96, 225.01, 218.54, 217.49, 217.96, 218.24
+        ]),
         itemsCharts: [
             { name: "1", price: 230.54 },
             { name: "2", price: 234.4 },
@@ -27,7 +30,9 @@ export const topTokens = [
         currencyFull: "Tesla, Inc. Common Stock",
         currencyShort: "TSLA",
         price: "€232.1",
-        percent: 22.83,
+        percent: calculatePercentChange([
+            248.23, 252.64, 256.56, 248.5, 249.23, 239.2, 251.51, 246.38, 215.99, 220.25, 219.8, 232.1
+        ]),
         itemsCharts: [
             { name: "12.07.2024", price: 248.23 },
             { name: "15.07.2024", price: 252.64 },
@@ -49,7 +54,9 @@ export const topTokens = [
         currencyFull: "Alphabet Inc. Class A Common Stock",
         currencyShort: "GOOGL",
         price: "€170.38",
-        percent: 4,
+        percent: calculatePercentChange([
+            185.07, 186.53, 183.92, 181.02, 177.69, 177.66, 181.67, 181.79, 172.63, 167.28, 167.0, 169.53
+        ]),
         itemsCharts: [
             { name: "12.07.2024", price: 185.07 },
             { name: "15.07.2024", price: 186.53 },
@@ -66,3 +73,11 @@ export const topTokens = [
         ],
     },
 ];
+
+
+function calculatePercentChange(prices) {
+    const lastPrice = prices[prices.length - 1];
+    const prevPrice = prices[prices.length - 2];
+    const percentChange = ((lastPrice - prevPrice) / prevPrice) * 100;
+    return percentChange.toFixed(2);
+}
