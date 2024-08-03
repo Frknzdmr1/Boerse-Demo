@@ -1,8 +1,8 @@
 package de.brightslearning.boersebackend.service;
 
-import de.brightslearning.boersebackend.Dto.AktieDTO;
-import de.brightslearning.boersebackend.Dto.PortfolioAktienPost;
-import de.brightslearning.boersebackend.Dto.PortfolioDTO;
+import de.brightslearning.boersebackend.dto.AktieDTO;
+import de.brightslearning.boersebackend.dto.PortfolioAktienPost;
+import de.brightslearning.boersebackend.dto.PortfolioDTO;
 import de.brightslearning.boersebackend.model.Aktie;
 import de.brightslearning.boersebackend.model.Portfolio;
 import de.brightslearning.boersebackend.model.PortfolioAktie;
