@@ -1,5 +1,6 @@
 package de.brightslearning.boersebackend.controller;
 
+import de.brightslearning.boersebackend.Dto.LoginDto;
 import de.brightslearning.boersebackend.Dto.RegisterDto;
 import de.brightslearning.boersebackend.model.Benutzer;
 import de.brightslearning.boersebackend.model.UserRolle;
@@ -34,6 +35,16 @@ public class LogInRegistrierungController {
         this.benutzerRepository = benutzerRepository;
         this.userRolleRepository = userRolleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+        Benutzer benutzer = benutzerRepository.findByBenutzername(loginDto.benutername()).get();
+        if(benutzer == null || !passwordEncoder.matches(loginDto.password(), benutzer.getPasswort())){
+            return new ResponseEntity<>("Der Benutzername oder das Passwort sind falsch!", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Sie sind angemeldet", HttpStatus.OK);
     }
 
     @PostMapping("/register")
