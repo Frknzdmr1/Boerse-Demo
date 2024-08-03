@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Input, Button, Box, Text, Stack, Heading, Divider } from '@chakra-ui/react';
+import authentifizierungsUtils, {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
-type Props = {
-    userId: string
-}
 type Stock = {
     symbol: string,
     menge: number,
@@ -16,7 +14,7 @@ type Portfolio = {
     portfolioAktien: Stock[]
 }
 
-const Portfolio = ({ userId }: Props): React.ReactElement => {
+const Portfolio = (): React.ReactElement => {
     const [stocks, setStocks] = useState<Stock[]>([]);
     const [newStockSymbol, setNewStockSymbol] = useState('');
     const [newStockQuantity, setNewStockQuantity] = useState(0);
@@ -25,22 +23,37 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
         portfolioAktien: []
     });
 
+
     const [actions, setActions] = useState<string[]>([]);
+    const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
 
     useEffect(() => {
+        const token = tokenResponse?.accessToken;
+        if (!tokenResponse || !tokenResponse.accessToken) {
+            throw new Error("No access token available. Please log in.");
+        }
+        const userId = getUserId();
         const fetchPortfolio = async () => {
+            console.log("hallo")
             try {
-                const response = await axios.get(`http://localhost:8080/portfolio/${userId}`);
-                console.log("Fetched portfolio:", response.data);
-                setPortfolio(response.data);
-                setStocks(groupStocks(response.data.portfolioAktien));
+                const response = await axios.get(`http://localhost:8080/portfolio/${userId}`,
+                    {
+                        headers:{
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                const data = await response.data;
+                console.log(data)
+                setPortfolio(data);
+                setStocks(groupStocks(data.portfolioAktien));
             } catch (error) {
                 console.error('Error fetching portfolio', error);
             }
         };
 
         fetchPortfolio();
-    }, [userId]);
+    }, []);
 
     const groupStocks = (stocks: Stock[]): Stock[] => {
         const grouped = stocks.reduce((acc: any, stock: Stock) => {
@@ -55,6 +68,12 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
     };
 
     const addStockToPortfolio = async () => {
+        const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
+        const token = tokenResponse?.accessToken;
+        if (!tokenResponse || !tokenResponse.accessToken) {
+            throw new Error("No access token available. Please log in.");
+        }
+        const userId = getUserId();
         try {
             await axios.post(`http://localhost:8080/portfolio/${portfolio.id}/add-stock`, {
                 symbol: newStockSymbol,
@@ -75,6 +94,12 @@ const Portfolio = ({ userId }: Props): React.ReactElement => {
     };
 
     const removeStockFromPortfolio = async (symbol: string) => {
+        const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
+        const token = tokenResponse?.accessToken;
+        if (!tokenResponse || !tokenResponse.accessToken) {
+            throw new Error("No access token available. Please log in.");
+        }
+        const userId = getUserId();
         try {
             // Implement the remove stock API call here
             // Example: await axios.post(`http://localhost:8080/portfolio/${portfolio.id}/remove-stock`, { symbol });
