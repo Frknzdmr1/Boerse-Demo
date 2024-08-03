@@ -7,19 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+
 @Service
 public class AktienService {
-
     private final WebClient webClient = WebClient.create();
 
     @Value("${POLYGON_API_KEY}")
@@ -138,5 +137,47 @@ public class AktienService {
                     };
                 })
                 .collect(Collectors.toList());
+    }
+    public List<LocalDateUndPreis> getClosingPricesArray2(String ticker) {
+        PreviousClose previousClose = getStockPriceRecords(ticker);
+
+        if (previousClose == null) {
+            throw new IllegalArgumentException("Stock price records not available");
+        }
+
+        List<Result> results = previousClose.results();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+        return results.stream()
+                .map(result -> {
+                    long timestamp = result.t();
+                    String formattedDate = sdf.format(timestamp);
+                    double dprice = result.c();
+                    return new LocalDateUndPreis(new Date(timestamp).toLocalDate(), BigDecimal.valueOf(dprice));
+                })
+                .collect(Collectors.toList());
+    }
+
+    public BigDecimal getPriceByDate(String ticker, LocalDate date){
+        LocalDate date1 = date;
+        if(date.getDayOfWeek().equals(6) ||date.getDayOfWeek().equals(7)){
+             date1.minusDays(date.getDayOfWeek().getValue() - 5);
+        }
+
+        String url = "https://api.polygon.io/v1/open-close/" + ticker
+                + "/" + date1 + "?adjusted=true&apiKey=" + polygonApiKey;
+
+        OpenClose response = Objects.requireNonNull(
+                webClient
+                        .get()
+                        .uri(url)
+                        .retrieve()
+                        .toEntity(OpenClose.class)
+                        .block()
+        ).getBody();
+
+
+        return BigDecimal.valueOf(response.close());
+
     }
 }
