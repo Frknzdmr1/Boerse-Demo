@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,13 +14,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-@NoArgsConstructor
+
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    private JWTGenerator tokenGenerator;
+    private final JWTGenerator tokenGenerator;
 
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
     @Autowired
     public JWTAuthenticationFilter(JWTGenerator tokenGenerator, SecurityService securityService){
@@ -57,7 +56,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 
 
 }
