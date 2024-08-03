@@ -9,7 +9,7 @@ import NeuesteAktionen from "./NeuesteAktionen";
 
 const HomePage = () => {
     const [balance, setBalance] = useState(0); // State für das Guthaben
-    const userId = "bd159b34-852c-48d6-b64d-78da79e3a9a7";
+    const userId = "e02c467e-8586-4768-b84b-78a92d6e5527";
 
     useEffect(() => {
         const fetchKonto = async (userId) => {

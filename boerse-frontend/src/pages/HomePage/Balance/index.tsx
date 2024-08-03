@@ -227,7 +227,7 @@ const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
                     <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile kaufen</Button>
                 </Stack>
                 <Box mt={8}>
-                    <Heading as="h3" size="md" mb={4}>Guthaben: {balance}€</Heading>
+                    <Heading as="h3" size="md" mb={4}>Guthaben: {balance - portfolioValue}€</Heading>
                     {portfolio.map((stock, index) => (
                         <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
                             <Text>{stock.symbol}: {stock.menge} shares @
