@@ -6,6 +6,7 @@ import {Input, Button, Box, Text, Stack, Heading, Divider} from '@chakra-ui/reac
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
+import authentifizierungsUtils, {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const duration = [
     {id: "0", title: "All time"},
@@ -55,8 +56,18 @@ const Balance = ({userId}: { userId: string }) => {
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
+                const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
+                const token = tokenResponse?.accessToken;
+                if (!tokenResponse || !tokenResponse.accessToken) {
+                    throw new Error("No access token available. Please log in.");
+                }
+                const userId = getUserId();
                 const response = await axios.get(`http://localhost:8080/portfolio/${userId}`, {
-                    withCredentials: true // Ensure cookies are sent for authentication
+                    //withCredentials: true, // Ensure cookies are sent for authentication
+                    headers:{
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                   }
                 });
                 const portfolio = response.data;
 
