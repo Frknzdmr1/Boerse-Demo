@@ -6,13 +6,15 @@ import Layout from "@/components/Layout";
 import Balance from "./Balance";
 import TopTokens from "./TopMarken";
 import NeuesteAktionen from "./NeuesteAktionen";
+import {getAccessToken, getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const HomePage = () => {
     const [balance, setBalance] = useState(0); // State für das Guthaben
-    const userId = "e02c467e-8586-4768-b84b-78a92d6e5527";
+    const token = getAccessToken();
 
     useEffect(() => {
-        const fetchKonto = async (userId) => {
+        const userId = getUserId();
+        const fetchKonto = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/guthaben/${userId}`);
                 setBalance(response.data.kontostand);
@@ -21,8 +23,8 @@ const HomePage = () => {
                 console.error("Error fetching balance:", error);
             }
         };
-        fetchKonto(userId);
-    }, [userId]);
+        fetchKonto();
+    }, [token]);
 
 
     return (

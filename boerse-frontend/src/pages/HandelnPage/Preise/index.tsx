@@ -8,7 +8,7 @@ import {topTokens} from "@/mocks/topTokens";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-//type TopTokensProps = {};
+
 interface StockData {
     ticker: string;
     queryCount: number;

@@ -6,7 +6,7 @@ import {Input, Button, Box, Text, Stack, Heading, Divider} from '@chakra-ui/reac
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
-import authentifizierungsUtils, {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
+import authentifizierungsUtils, {getAccessToken, getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const duration = [
     {id: "0", title: "All time"},
@@ -41,11 +41,10 @@ const CustomTooltip = ({
 };
 
 type BalanceProps = {
-    userId: string;
     balance: number; // Assuming balance is of type number
 };
 
-const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
+const Balance: React.FC<BalanceProps> = ({balance}) => {
     const [time, setTime] = useState(duration[0]);
     const {colorMode} = useColorMode();
     const isDarkMode = colorMode === "dark";
@@ -55,10 +54,13 @@ const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
     const [portfolioChange, setPortfolioChange] = useState<number>(0);
 
     const [newStockSymbol, setNewStockSymbol] = useState('');
-    const [newStockQuantity, setNewStockQuantity] = useState("");
+    const [newStockQuantity, setNewStockQuantity] = useState<number>(0);
     const [portfolio, setPortfolio] = useState<any[]>([]);
 
+    const token = getAccessToken();
+
     useEffect(() => {
+        const userId = getUserId();
         const fetchPortfolio = async () => {
             try {
                 const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
@@ -66,7 +68,6 @@ const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
                 if (!tokenResponse || !tokenResponse.accessToken) {
                     throw new Error("No access token available. Please log in.");
                 }
-                const userId = getUserId();
                 const response = await axios.get(`http://localhost:8080/portfolio/${userId}`, {
                     //withCredentials: true, // Ensure cookies are sent for authentication
                     headers:{
@@ -107,9 +108,10 @@ const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
         };
 
         fetchPortfolio();
-    }, [userId]);
+    }, [token]);
 
     const addStockToPortfolio = async () => {
+        const userId = getUserId();
         try {
             await axios.post(`http://localhost:8080/portfolio/${userId}/add-stock`, {
                 symbol: newStockSymbol,

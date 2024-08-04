@@ -3,6 +3,7 @@ import Field from "@/components/Field";
 import Image from "@/components/Image";
 import Details from "../Details";
 import axios from "axios";
+import {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const Profil = () => {
     const [username, setUsername] = useState("");
@@ -11,11 +12,11 @@ const Profil = () => {
     const [bio, setBio] = useState("");
     const [website, setWebsite] = useState("");
     const [social, setSocial] = useState("");
-    const [updateStatus, setUpdateStatus] = useState(null);
-    const userId = "b105fa3b-e251-4b89-9392-44b40ec5e6fa";
+    const [updateStatus, setUpdateStatus] = useState<string>("");
+
 
     useEffect(() => {
-
+        const userId = getUserId();
         if (userId) {
             axios.get(`http://localhost:8080/benutzer/${userId}`)
                 .then(response => {
@@ -31,9 +32,10 @@ const Profil = () => {
                     console.error('Error loading user data:', error);
                 });
         }
-    }, [userId]);
+    }, []);
 
     const saveProfile = () => {
+        const userId = getUserId();
         const userData = {
             benutzername: username,
             email,
