@@ -32,7 +32,7 @@ const Login: React.FC = () => {
                 id: AuthentifizierungsUtils.getUserIdFromToken(token)!,
                 benutzername: name
             });
-            navigate("http://localhost:5173/", {
+            navigate("/", {
                 replace: true
             });
         } catch (error) {
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
                     </div>
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Hast du kein Konto?{' '}
-                        < button type={"button"}  onClick={() => navigate("/register")}
+                        < button type={"button"}  onClick={handleReqistrierung}
                                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Zur
                             Registrierung
                         </button>
