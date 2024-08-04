@@ -1,8 +1,7 @@
 package de.brightslearning.boersebackend.controller;
 
-import de.brightslearning.boersebackend.Dto.PortfolioAktienPost;
-import de.brightslearning.boersebackend.Dto.PortfolioDTO;
-import de.brightslearning.boersebackend.model.Portfolio;
+import de.brightslearning.boersebackend.dto.PortfolioAktienPost;
+import de.brightslearning.boersebackend.dto.PortfolioDTO;
 import de.brightslearning.boersebackend.model.PortfolioAktie;
 import de.brightslearning.boersebackend.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;

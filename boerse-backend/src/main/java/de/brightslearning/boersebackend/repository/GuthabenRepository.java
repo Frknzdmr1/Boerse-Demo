@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface GuthabenRepository extends JpaRepository<Guthaben, UUID> {
+    Guthaben findByBenutzerId(UUID benutzerId);
 }

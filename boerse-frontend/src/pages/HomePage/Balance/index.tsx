@@ -6,6 +6,7 @@ import {Input, Button, Box, Text, Stack, Heading, Divider} from '@chakra-ui/reac
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
+import authentifizierungsUtils, {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const duration = [
     {id: "0", title: "All time"},
@@ -39,7 +40,12 @@ const CustomTooltip = ({
     return null;
 };
 
-const Balance = ({userId}: { userId: string }) => {
+type BalanceProps = {
+    userId: string;
+    balance: number; // Assuming balance is of type number
+};
+
+const Balance: React.FC<BalanceProps> = ({userId, balance}) => {
     const [time, setTime] = useState(duration[0]);
     const {colorMode} = useColorMode();
     const isDarkMode = colorMode === "dark";
@@ -55,8 +61,18 @@ const Balance = ({userId}: { userId: string }) => {
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
+                const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
+                const token = tokenResponse?.accessToken;
+                if (!tokenResponse || !tokenResponse.accessToken) {
+                    throw new Error("No access token available. Please log in.");
+                }
+                const userId = getUserId();
                 const response = await axios.get(`http://localhost:8080/portfolio/${userId}`, {
-                    withCredentials: true // Ensure cookies are sent for authentication
+                    //withCredentials: true, // Ensure cookies are sent for authentication
+                    headers:{
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                   }
                 });
                 const portfolio = response.data;
 
@@ -209,7 +225,7 @@ const Balance = ({userId}: { userId: string }) => {
                         onChange={(e) => setNewStockSymbol(e.target.value.toUpperCase())}
                         placeholder="Aktienticker"
                         variant="filled"
-                          w="50%"
+                        w="50%"
                     />
                     <Input
                         type="number"
@@ -217,12 +233,12 @@ const Balance = ({userId}: { userId: string }) => {
                         onChange={(e) => setNewStockQuantity(Number(e.target.value))}
                         placeholder="Menge"
                         variant="filled"
-                          w="50%"
+                        w="50%"
                     />
-                    <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile hinzufügen</Button>
+                    <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile kaufen</Button>
                 </Stack>
                 <Box mt={8}>
-                    <Heading as="h3" size="md" mb={4}>Portfolio</Heading>
+                    <Heading as="h3" size="md" mb={4}>Guthaben: {balance - portfolioValue}€</Heading>
                     {portfolio.map((stock, index) => (
                         <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
                             <Text>{stock.symbol}: {stock.menge} shares @

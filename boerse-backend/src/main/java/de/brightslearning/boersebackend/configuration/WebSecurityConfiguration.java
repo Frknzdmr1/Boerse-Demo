@@ -1,5 +1,6 @@
 package de.brightslearning.boersebackend.configuration;
 
+import de.brightslearning.boersebackend.repository.BenutzerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,24 +9,34 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.List;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration {
 
+
+    private final JwtAuthEntryPoint authEntryPoint;
     private final SecurityService securityService;
+    private final BenutzerRepository benutzerRepository;
 
     @Autowired
-    public WebSecurityConfiguration(SecurityService securityService) {
+    public WebSecurityConfiguration(
+            SecurityService securityService,
+            JwtAuthEntryPoint authEntryPoint,
+            BenutzerRepository benutzerRepository){
         this.securityService = securityService;
+        this.authEntryPoint = authEntryPoint;
+        this.benutzerRepository = benutzerRepository;
     }
 
     @Bean
@@ -34,32 +45,26 @@ public class WebSecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Zeige den default logIn an: - siehe https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html for adaptions
+
         http
-                .csrf(csrf -> csrf.disable())
-                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(h -> h.frameOptions(
+                        HeadersConfigurer.FrameOptionsConfig::sameOrigin
+                ))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login", "/register", "/h2-console/**",
-                                "/aktie/**", "/aktie/prev/**",
-                                "/aktie/current-price/**", "/portfolio/**", "/benutzer/**")
+                        .requestMatchers("/portfolio/**", "/aktie/**", "/benutzer/**")
                         .permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .defaultSuccessUrl("/")
+                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**")
                         .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                        .permitAll()
-                )
-                .httpBasic(withDefaults -> {
-                });
+                        .anyRequest().authenticated()
+                );
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.httpBasic(withDefaults());
 
-        // Definiere die Landingpage nach dem Logout:
-        http.logout(l -> l.logoutSuccessUrl("/"));
-
-        // Enable H2-DB support
-        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
         return http.build();
     }
@@ -69,5 +74,11 @@ public class WebSecurityConfiguration {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter(){
+        return new JWTAuthenticationFilter(new JWTGenerator(benutzerRepository), new SecurityService(benutzerRepository));
+    }
+
 
 }
