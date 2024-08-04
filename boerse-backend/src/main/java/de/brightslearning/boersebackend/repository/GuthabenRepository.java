@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface GuthabenRepository extends JpaRepository<Guthaben, UUID> {
 
     public List<Guthaben> findAllByBenutzer(Benutzer benutzer);
+    Guthaben findByBenutzerId(UUID benutzerId);
 }

@@ -18,7 +18,7 @@ import Login from "@/pages/Login/Login";
 import Registrierung from "@/pages/Registrierung/Registrierung"; // Import Layout component
 
 function App() {
-    const userId = "YOUR_USER_ID"; // Replace with actual user ID
+    const userId = "e02c467e-8586-4768-b84b-78a92d6e5527"; // Replace with actual user ID
 
     return (
         <ChakraProvider>
