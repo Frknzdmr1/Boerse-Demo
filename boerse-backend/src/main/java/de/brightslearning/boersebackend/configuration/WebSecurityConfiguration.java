@@ -58,7 +58,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/portfolio/**", "/aktie/**", "/benutzer/**")
                         .permitAll()
-                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**")
+                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**", "/current-price/**", "/guthaben/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 );

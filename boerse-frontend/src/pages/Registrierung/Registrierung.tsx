@@ -22,7 +22,7 @@ const Registrierung: React.FC = () => {
     const navigate = useNavigate();
 
     const handleRegistrierung = async (e: React.FormEvent<HTMLFormElement>) => {
-        const baseUrl = "http:/localhost:8080";
+        const baseUrl = "http://localhost:8080";
         e.preventDefault();
         if (passwort !== passwort2) {
             setSindPasswoerterGleich(false);
@@ -108,7 +108,7 @@ const Registrierung: React.FC = () => {
                             Hast du schon ein Konto?{' '}
                             <button type="button"
                                     className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-                                    onClick={() => navigate("/Login")}>Login
+                                    onClick={handleRegistrierung}>Login
                             </button>
                         </p>
                     </div>
