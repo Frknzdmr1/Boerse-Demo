@@ -47,7 +47,7 @@ public class GuthabenBerechnenService {
                 )
         );
 
-        for(LocalDate date = anfangsDatum; date.isBefore(LocalDate.now()); date.plusDays(1) ){
+        for(LocalDate date = anfangsDatum; date.isBefore(LocalDate.now()); date = date.plusDays(1) ){
             BigDecimal guthaben = BigDecimal.valueOf(50_000);
 
             for( ZonedDateTime dateTime : guthabenVeraenderungenMap.keySet()) {
@@ -135,7 +135,7 @@ public class GuthabenBerechnenService {
 
         List<Integer> aktienMengen = new ArrayList<>();
 
-        for(LocalDate date = anfangsDatum; date.isBefore(LocalDate.now()); date.plusDays(1) ){
+        for(LocalDate date = anfangsDatum; date.isBefore(LocalDate.now()); date = date.plusDays(1) ){
             int menge = 0;
 
             for( ZonedDateTime dateTime : zonedDateTimeAktienMengenVeraenderungsMap.keySet()) {
@@ -215,7 +215,7 @@ public class GuthabenBerechnenService {
                                                 LocalDate anfangsDatum){
         int i = 0;
         List<LocalDateUndPreis> portfolioNachDatum = new ArrayList<>();
-        for(LocalDate date = anfangsDatum; date.isBefore(date.plusDays(portfolioWertVerlauf.size())); date.plusDays(1)){
+        for(LocalDate date = anfangsDatum; date.isBefore(date.plusDays(portfolioWertVerlauf.size())); date = date.plusDays(1)){
             portfolioNachDatum.add(
                     new LocalDateUndPreis(date,
                             guthabenNachZeit.get(date).add(portfolioWertVerlauf.get(i)
