@@ -16,14 +16,25 @@ import java.util.List;
 @Service
 public class PortfolioWertService {
 
-    @Autowired
-    private PortfolioRepository portfolioRepository;
+
+    private final PortfolioRepository portfolioRepository;
+
+
+    private final PortfolioWertRepository portfolioWertRepository;
+
+
+    private final AktienService aktienService;
 
     @Autowired
-    private PortfolioWertRepository portfolioWertRepository;
-
-    @Autowired
-    private AktienService aktienService;
+    public PortfolioWertService(
+            PortfolioRepository portfolioRepository,
+            PortfolioWertRepository portfolioWertRepository,
+            AktienService aktienService
+    ){
+        this.portfolioRepository = portfolioRepository;
+        this.portfolioWertRepository = portfolioWertRepository;
+        this.aktienService = aktienService;
+    }
 
     @Scheduled(cron = "0 0 16 * * MON-FRI", zone = "America/New_York")
     public void calculateAndSavePortfolioWerte() {
