@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Text, Heading, Spinner } from '@chakra-ui/react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Portfolio, {Stock} from "@/components/Portfolio";
 
 const dummyPortfolio = [
     { symbol: 'AAPL', menge: 5 },
@@ -11,10 +12,16 @@ const dummyPortfolio = [
 
 ];
 
+
+type PortfolioType = {
+    portfolioAktien: Stock[]
+}
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
 
 const MyWallet = () => {
-    const [portfolio, setPortfolio] = useState(null);
+    const [portfolio, setPortfolio] = useState<PortfolioType>({
+        portfolioAktien: []
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

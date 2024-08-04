@@ -3,8 +3,6 @@ import TabsSame from "@/components/TabsSame";
 import Buy from "./Kaufen";
 import Sell from "./Verkaufen";
 
-//type BuyAndSellProps = {};
-
 const KaufenUndVerkaufen = () => {
     const [type, setType] = useState<string>("buy");
 

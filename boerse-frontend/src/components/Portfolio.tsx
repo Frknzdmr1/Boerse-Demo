@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Input, Button, Box, Text, Stack, Heading, Divider } from '@chakra-ui/react';
 import authentifizierungsUtils, {getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
-type Stock = {
+export type Stock = {
     symbol: string,
     menge: number,
     durchschnittlicherKaufpreis: number
