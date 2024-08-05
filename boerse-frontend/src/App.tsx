@@ -15,7 +15,7 @@ import Error from "@/components/Error";
 import {AuthentifizierungProvider} from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
 import {isLoggedIn} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 import Login from "@/pages/Login";
-import Registrierung from "@/pages/Registrierung/Registrierung"; // Import Layout component
+import Index from "@/pages/Registrierung"; // Import Layout component
 
 function App() {
     // Replace with actual user ID
@@ -28,7 +28,7 @@ function App() {
                         <Route index element={isLoggedIn() ? <HomePage/> : <Navigate to={"/Login"}/>}/>
                     </Route>
                     <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Registrierung/>}/>
+                    <Route path="/register" element={<Index/>}/>
                     <Route path="/current-price" element={<Aktien/>}/>
                     <Route path="/portfolio" element={<Portfolio/>}/>
                     <Route path="/aktuelles" element={<AktuellesPage/>}/>
