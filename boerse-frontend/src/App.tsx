@@ -14,7 +14,7 @@ import LearningPage from '@/components/LearningPage';
 import Error from "@/components/Error";
 import {AuthentifizierungProvider} from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
 import {isLoggedIn} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
-import Login from "@/pages/Login/Login";
+import Login from "@/pages/Login";
 import Registrierung from "@/pages/Registrierung/Registrierung"; // Import Layout component
 
 function App() {
