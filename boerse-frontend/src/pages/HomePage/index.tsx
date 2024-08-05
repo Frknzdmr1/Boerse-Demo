@@ -7,6 +7,7 @@ import Balance from "./Balance";
 import TopTokens from "./TopMarken";
 import NeuesteAktionen from "./NeuesteAktionen";
 import {getAccessToken, getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
+import Learnings from "@/pages/HomePage/Learnings";
 
 const HomePage = () => {
     const [balance, setBalance] = useState(50.000); // State für das Guthaben
@@ -36,6 +37,7 @@ const HomePage = () => {
                 </div>
                 <div className="flex -mx-1 lg:block lg:mx-0 lg:space-y-2">
                     <NeuesteAktionen/>
+                    <Learnings />
                 </div>
             </div>
         </Layout>
