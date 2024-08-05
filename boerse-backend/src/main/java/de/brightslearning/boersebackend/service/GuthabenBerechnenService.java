@@ -4,6 +4,8 @@ import de.brightslearning.boersebackend.model.*;
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
 import de.brightslearning.boersebackend.repository.TransaktionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,10 +13,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@Service
 public class GuthabenBerechnenService {
 
     private final TransaktionRepository transaktionRepository;
     private final BenutzerRepository benutzerRepository;
+    @Value("${POLYGON_API_KEY}")
+    private String polygonApiKey;
 
     @Autowired
     public GuthabenBerechnenService(TransaktionRepository transaktionRepository,

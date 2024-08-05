@@ -9,7 +9,7 @@ import NeuesteAktionen from "./NeuesteAktionen";
 import {getAccessToken, getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const HomePage = () => {
-    const [balance, setBalance] = useState(0); // State für das Guthaben
+    const [balance, setBalance] = useState(50.000); // State für das Guthaben
     const token = getAccessToken();
 
     useEffect(() => {

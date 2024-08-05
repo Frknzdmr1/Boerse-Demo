@@ -1,8 +1,6 @@
 import CurrencyInput from "react-currency-input-field";
 import Option from "@/components/Option";
 
-//type BuyProps = {};
-
 const Kaufen = () => {
     return (
         <>
