@@ -25,12 +25,6 @@ export const navigation = [
     },
     {
         id: "4",
-        title: "Hilfe",
-        icon: "support",
-        url: "/hilfe",
-    },
-    {
-        id: "5",
         title: "Aktuelles",
         icon: "news",
         url: "/aktuelles",
