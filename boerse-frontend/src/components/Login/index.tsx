@@ -35,7 +35,7 @@ export const Login = ({
             <div className="relative w-[37.5rem] bg-theme-dune rounded-[2rem] overflow-hidden 2xl:w-[30rem] xl:w-[24.375rem] lg:hidden">
                 <Image className="object-cover" src={image} fill alt="" />
             </div>
-            <div className="flex grow justify-center items-center px-12 py-14 lg:p-0">
+            <div className="flex grow justify-center items-center px-12 py-5 lg:p-0">
                 <div className="max-w-[32.5rem] w-full 2xl:max-w-[24rem]">
                     <div className="mb-10 2xl:mb-8">
                         <Link
