@@ -6,7 +6,11 @@ import {Input, Button, Box, Text, Stack, Heading, Divider} from '@chakra-ui/reac
 import Card from "@/components/Card";
 import CurrencyFormat from "@/components/CurrencyFormat";
 import Percent from "@/components/Percent";
-import authentifizierungsUtils, {getAccessToken, getUserId} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
+import authentifizierungsUtils, {
+    getAccessToken,
+    getPortfolioId,
+    getUserId
+} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 
 const duration = [
     {id: "0", title: "All time"},
@@ -15,7 +19,7 @@ const duration = [
 ];
 
 type ChartData = {
-    name: string;
+    date: string;
     price: number;
 };
 
@@ -56,7 +60,6 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
     const [newStockSymbol, setNewStockSymbol] = useState('');
     const [newStockQuantity, setNewStockQuantity] = useState<number>(0);
     const [portfolio, setPortfolio] = useState<any[]>([]);
-
     const token = getAccessToken();
 
     useEffect(() => {
@@ -64,24 +67,30 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
         const fetchPortfolio = async () => {
             try {
                 const tokenResponse = authentifizierungsUtils.getAktuelleAuthResponse();
-                const token = tokenResponse?.accessToken;
                 if (!tokenResponse || !tokenResponse.accessToken) {
                     throw new Error("No access token available. Please log in.");
                 }
-                const response = await axios.get(`http://localhost:8080/portfolio/${userId}`, {
-                    //withCredentials: true, // Ensure cookies are sent for authentication
-                    headers:{
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                   }
-                });
+                const response = await axios.get(`http://localhost:8080/portfolio/${userId}`,
+                    {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    });
                 const portfolio = response.data;
 
                 if (portfolio && portfolio.portfolioAktien) {
                     const transformedData = portfolio.portfolioAktien.map((stock: any) => ({
-                        name: stock.symbol,
+                        date: stock.symbol,
                         price: stock.aktuellerPreis
                     }));
+
+                // const dateStr = "2024-07-02";
+                // const userId = getUserId();
+                // console.log(userId)
+                // const chartDataResponse = await axios.get(
+                //     `http://localhost:8080/wert/${userId}/${dateStr}`
+                // );
+                // console.log(chartDataResponse.data);
 
                     setChartData(transformedData);
 
@@ -90,7 +99,7 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
 
                     const totalInitialValue = portfolio.portfolioAktien.reduce((acc: number, stock: any) => acc + (stock.menge * stock.durchschnittlicherKaufpreis), 0);
                     const change = totalInitialValue ? ((totalValue - totalInitialValue) / totalInitialValue) * 100 : 0;
-                    setPortfolioChange(change);
+                    setPortfolioChange(change.toFixed(2));
 
                     setPortfolio(portfolio.portfolioAktien);
                 } else {
@@ -111,13 +120,18 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
     }, [token]);
 
     const addStockToPortfolio = async () => {
-        const userId = getUserId();
+        const portfolioId = getPortfolioId();
         try {
-            await axios.post(`http://localhost:8080/portfolio/${userId}/add-stock`, {
+            await axios.post(`http://localhost:8080/portfolio/${portfolioId}/add-stock`, {
                 symbol: newStockSymbol,
                 menge: newStockQuantity,
                 durchschnittlicherKaufpreis: 0 // Adjust as necessary
-            });
+            },
+                {
+                    headers:{
+                        Authorization: "Bearer " + token
+                    }
+                });
 
             const priceResponse = await axios.get(`http://localhost:8080/aktie/current-price/${newStockSymbol}`);
             const currentPrice = priceResponse.data;
@@ -126,7 +140,7 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
             console.log(`Current price of ${newStockSymbol}: ${currentPrice}`);
 
 
-            setChartData([...chartData, {name: newStockSymbol, price: currentPrice}]);
+            setChartData([...chartData, {date: newStockSymbol, price: currentPrice}]);
 
             const updatedPortfolio = [...portfolio, {
                 symbol: newStockSymbol,
@@ -138,8 +152,9 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
             const totalValue = updatedPortfolio.reduce((acc: number, stock: any) => acc + (stock.menge * stock.aktuellerPreis), 0);
             setPortfolioValue(totalValue);
             const totalInitialValue = updatedPortfolio.reduce((acc: number, stock: any) => acc + (stock.menge * stock.durchschnittlicherKaufpreis), 0);
-            const change = totalInitialValue ? ((totalValue - totalInitialValue) / totalInitialValue) * 100 : 0;
-            setPortfolioChange(change);
+            const change = (totalInitialValue ? ((totalValue - totalInitialValue) / totalInitialValue) * 100 : 0)
+
+            setPortfolioChange(change.toFixed(2));
 
             setNewStockSymbol('');
             setNewStockQuantity(0);
@@ -240,7 +255,7 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
                     <Button onClick={addStockToPortfolio} colorScheme="teal">Anteile kaufen</Button>
                 </Stack>
                 <Box mt={8}>
-                    <Heading as="h3" size="md" mb={4}>Guthaben: {balance - portfolioValue}€</Heading>
+                    <Heading as="h3" size="md" mb={4}>Guthaben: €{(balance - portfolioValue).toFixed(2)}</Heading>
                     {portfolio.map((stock, index) => (
                         <Box key={index} mb={2} p={4} shadow="md" borderWidth="1px" borderRadius="md">
                             <Text>{stock.symbol}: {stock.menge} shares @

@@ -113,6 +113,7 @@ const authentifizierungsHeader = () => {
 type JwtPayload = {
     userId: string
     nutzername: string
+    portfolioId: string
 }
 const getUserIdFromToken = (token: string): string | null => {
     try {
@@ -156,6 +157,15 @@ export const getAccessToken = () => {
     return data.accessToken;
 
 }
+export const getPortfolioId = () => {
+    const token = localStorage.getItem("user-token");
+    if(!token){
+        alert("AuthToken is empty!")
+        return null;
+    }
+    const decodedToken = jwtDecode<JwtPayload>(token);
+    return decodedToken.portfolioId;
+}
 
 const getBenutzernameFromToken = (token: string) : string | null => {
     try{
@@ -178,6 +188,7 @@ export default {
     getAktuellerBenutzer,
     isLoggedIn,
     getDecodedHeader,
-    getUserId
+    getUserId,
+    getPortfolioId
 }
 
