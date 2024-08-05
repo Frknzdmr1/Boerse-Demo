@@ -1,18 +1,33 @@
 import React from "react";
+import { Card, Box, Heading, Text } from "@chakra-ui/react";
 
-const Überblick = ({tickerDetails}) => {
+const Überblick = ({ tickerDetails }) => {
     return (
-        <div className="card-sidebar">
-            <h2>Überblick</h2>
+        <Card p={4} boxShadow="md">
+            <Text fontSize="xl" fontWeight="bold" mb={4}>
+                Überblick
+            </Text>
             {tickerDetails && (
-                <div className="flex flex-col gap-2">
-                    <div><h1><strong>{tickerDetails.market_cap}T</strong></h1>
-                        <span className="text-caption-2 text-theme-secondary opacity-75">Marketcap</span></div>
-                    <div><h1><strong>{tickerDetails.primary_exchange}</strong></h1>
-                        <span className="text-caption-2 text-theme-secondary opacity-75">Primary Exchange</span></div>
-                </div>
+                <Box display="flex" flexDirection="column" gap={2}>
+                    <Box>
+                        <Heading as="h1" size="md">
+                            <strong>{tickerDetails.market_cap}T</strong>
+                        </Heading>
+                        <Text fontSize="sm" color="gray.500">
+                            Marketcap
+                        </Text>
+                    </Box>
+                    <Box>
+                        <Heading as="h1" size="md">
+                            <strong>{tickerDetails.primary_exchange}</strong>
+                        </Heading>
+                        <Text fontSize="sm" color="gray.500">
+                            Primary Exchange
+                        </Text>
+                    </Box>
+                </Box>
             )}
-        </div>
+        </Card>
     );
 };
 

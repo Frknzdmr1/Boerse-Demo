@@ -2,7 +2,9 @@ package de.brightslearning.boersebackend.configuration;
 
 import de.brightslearning.boersebackend.dto.LoginDto;
 import de.brightslearning.boersebackend.model.Benutzer;
+import de.brightslearning.boersebackend.model.Portfolio;
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
+import de.brightslearning.boersebackend.repository.PortfolioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -23,33 +25,39 @@ public class JWTGenerator {
 
 
     private final BenutzerRepository benutzerRepository;
+    private final PortfolioRepository portfolioRepository;
 
 
     @Autowired
-    public JWTGenerator(BenutzerRepository benutzerRepository){
+    public JWTGenerator(BenutzerRepository benutzerRepository, PortfolioRepository portfolioRepository){
         this.benutzerRepository = benutzerRepository;
-    }
-
-
-
-    public String generateToken(LoginDto loginDto){
-        String benutzername = loginDto.getUsername();
-        Benutzer benutzer = benutzerRepository.findByBenutzername(benutzername).orElseThrow();
-        UUID userId = benutzer.getId();
-        Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
-
-        return Jwts.builder()
-                .subject(benutzername)
-                .issuedAt(new Date())
-                .expiration(expireDate)
-                .signWith(getSignInKey())
-                .claim("userId", userId)
-                .claim("benutzername", benutzername)
-                .compact();
-
+        this.portfolioRepository = portfolioRepository;
 
     }
+
+
+
+public String generateToken(LoginDto loginDto){
+    String benutzername = loginDto.getUsername();
+    Benutzer benutzer = benutzerRepository.findByBenutzername(benutzername).orElseThrow();
+    UUID userId = benutzer.getId();
+    Portfolio portfolio = portfolioRepository.findPortfolioByBenutzer(benutzer);
+    UUID portfolioId = portfolio.getId();
+    Date currentDate = new Date();
+    Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
+
+    return Jwts.builder()
+            .subject(benutzername)
+            .issuedAt(new Date())
+            .expiration(expireDate)
+            .signWith(getSignInKey())
+            .claim("userId", userId)
+            .claim("benutzername", benutzername)
+            .claim("portfolioId", portfolioId)
+            .compact();
+
+
+}
 
 
     public Claims getClaims(String token) {

@@ -42,7 +42,6 @@ const Profil = () => {
 
 
         };
-        console.log('UserData:', userData);
 
         if (userId) {
             axios.put(`http://localhost:8080/benutzer/${userId}`, userData)

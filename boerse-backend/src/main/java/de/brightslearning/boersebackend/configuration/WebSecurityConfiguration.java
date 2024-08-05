@@ -1,6 +1,7 @@
 package de.brightslearning.boersebackend.configuration;
 
 import de.brightslearning.boersebackend.repository.BenutzerRepository;
+import de.brightslearning.boersebackend.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,15 +29,18 @@ public class WebSecurityConfiguration {
     private final JwtAuthEntryPoint authEntryPoint;
     private final SecurityService securityService;
     private final BenutzerRepository benutzerRepository;
+    private final PortfolioRepository portfolioRepository;
 
     @Autowired
     public WebSecurityConfiguration(
             SecurityService securityService,
             JwtAuthEntryPoint authEntryPoint,
-            BenutzerRepository benutzerRepository){
+            BenutzerRepository benutzerRepository,
+            PortfolioRepository portfolioRepository){
         this.securityService = securityService;
         this.authEntryPoint = authEntryPoint;
         this.benutzerRepository = benutzerRepository;
+        this.portfolioRepository = portfolioRepository;
     }
 
     @Bean
@@ -50,7 +54,7 @@ public class WebSecurityConfiguration {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
+              //  .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(h -> h.frameOptions(
                         HeadersConfigurer.FrameOptionsConfig::sameOrigin
@@ -58,7 +62,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/portfolio/**", "/aktie/**", "/benutzer/**")
                         .permitAll()
-                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**")
+                        .requestMatchers("/", "/auth/login", "/auth/register", "/h2-console/**", "/wert/**", "/guthaben/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 );
@@ -77,7 +81,7 @@ public class WebSecurityConfiguration {
 
     @Bean
     public JWTAuthenticationFilter jwtAuthenticationFilter(){
-        return new JWTAuthenticationFilter(new JWTGenerator(benutzerRepository), new SecurityService(benutzerRepository));
+        return new JWTAuthenticationFilter(new JWTGenerator(benutzerRepository, portfolioRepository), new SecurityService(benutzerRepository));
     }
 
 

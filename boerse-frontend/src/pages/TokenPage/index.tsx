@@ -8,6 +8,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import BalanceToken from "@/pages/TokenPage/BalanceToken";
 import Loading from "@/components/Loading";
+import {Box} from "@chakra-ui/react";
 
 const TokenPage = () => {
     const {symbol} = useParams();
@@ -48,7 +49,7 @@ const TokenPage = () => {
     }, [symbol]);
 
     if (loading) {
-        return<Loading/>;
+        return <Loading/>;
     }
 
     if (!tickerDetails) {
@@ -57,16 +58,12 @@ const TokenPage = () => {
 
     return (
         <Layout title="Dashboard">
-            <div className="space-y-2">
-                <BalanceToken tickerDetails={tickerDetails} closingPrices={closingPrices}/>
-                <div className="flex flex-row">
+            <Box mx="auto" p={4}>
+                <Box p={4}> <BalanceToken tickerDetails={tickerDetails} closingPrices={closingPrices}/></Box>
+                <Box mt={4}>
                     <SingleToken tickerDetails={tickerDetails}/>
-                    <div className=" flex flex-col gap-4">
-                        <Kauf/>
-                        <Überblick tickerDetails={tickerDetails}/>
-                    </div>
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Layout>
     );
 };

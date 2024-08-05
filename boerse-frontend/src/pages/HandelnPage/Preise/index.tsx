@@ -100,7 +100,7 @@ const Preise = () => {
                         </div>
                         <div className="shrink-0">
                             <Link className="btn-gray h-10" to={`/token/${item.currencyShort}`}>
-                                Kaufen
+                                Mehr erfahren
                             </Link>
                         </div>
 
