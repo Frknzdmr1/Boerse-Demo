@@ -33,7 +33,8 @@ const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
             userId: AuthentifizierungsUtils.getUserIdFromToken(token)!,
             benutzername: name
         });
-        navigate("/"); // Hier wird zur Homepage navigiert
+          navigate('/');
+
     } catch (error) {
         console.error('Login fehlgeschlagen:', error);
     }
@@ -43,6 +44,7 @@ const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     const handleReqistrierung = () => {
         <NavLink to={"http://localhost:5173/register"}/>
     }
+
 
     const { colorMode, setColorMode } = useColorMode();
     return (

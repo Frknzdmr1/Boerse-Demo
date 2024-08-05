@@ -25,7 +25,17 @@ function App() {
             <AuthentifizierungProvider>
                 <Routes>
                     <Route path="/">
-                        <Route index element={isLoggedIn() ? <HomePage/> : <Navigate to={"/Login"}/>}/>
+
+                        <Route
+                            index
+                            element={
+                                isLoggedIn() ? (
+                                    <HomePage/>
+                                ) : (
+                                    <Navigate to="/login"/>
+                                )
+                            }
+                        />
                     </Route>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Index/>}/>
