@@ -5,7 +5,7 @@ import {kontext} from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
 //import {Card, Flex} from "@chakra-ui/react";
 //import logo from "../../.././public/images/logo-light.svg"
 import Field from "@/components/Field";
-import { useColorMode } from "@chakra-ui/react";
+import {useColorMode} from "@chakra-ui/react";
 import Login from "@/components/Login";
 
 export type BenutzerDto = {
@@ -20,33 +20,32 @@ const LoginPage: React.FC = () => {
     const {setAktuellerBenutzer} = useContext(kontext);
     const navigate = useNavigate();
 
-const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-        const data = await AuthentifizierungsUtils.login(username, password);
-        const token = data.accessToken;
-        let name = "";
-        if (AuthentifizierungsUtils.getBenutzernameFromToken(token) !== null) {
-            name = AuthentifizierungsUtils.getBenutzernameFromToken(token)!;
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const data = await AuthentifizierungsUtils.login(username, password);
+            const token = data.accessToken;
+            let name = "";
+            if (AuthentifizierungsUtils.getBenutzernameFromToken(token) !== null) {
+                name = AuthentifizierungsUtils.getBenutzernameFromToken(token)!;
+            }
+            await setAktuellerBenutzer!({
+                userId: AuthentifizierungsUtils.getUserIdFromToken(token)!,
+                benutzername: name
+            });
+            window.location.href = "http://localhost:5173"
+        } catch (error) {
+            console.error('Login fehlgeschlagen:', error);
+
         }
-        setAktuellerBenutzer!({
-            userId: AuthentifizierungsUtils.getUserIdFromToken(token)!,
-            benutzername: name
-        });
-          navigate('/');
-
-    } catch (error) {
-        console.error('Login fehlgeschlagen:', error);
-    }
-};
-
+    };
 
     const handleReqistrierung = () => {
         <NavLink to={"http://localhost:5173/register"}/>
     }
 
 
-    const { colorMode, setColorMode } = useColorMode();
+    const {colorMode, setColorMode} = useColorMode();
     return (
 
 

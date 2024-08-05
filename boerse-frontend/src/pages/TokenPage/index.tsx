@@ -62,7 +62,7 @@ const TokenPage = () => {
                 <div className="flex flex-row">
                     <SingleToken tickerDetails={tickerDetails}/>
                     <div className=" flex flex-col gap-4">
-                        <Kauf/>
+                    
                         <Überblick tickerDetails={tickerDetails}/>
                     </div>
                 </div>

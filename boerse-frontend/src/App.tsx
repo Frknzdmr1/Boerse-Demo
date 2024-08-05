@@ -13,7 +13,7 @@ import Layout from '@/components/Layout'; // Import Layout component
 import LearningPage from '@/components/LearningPage';
 import Error from "@/components/Error";
 import {AuthentifizierungProvider} from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
-import {isLoggedIn} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
+import {isLoggedIn, isLoggedIn2} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 import Login from "@/pages/Login";
 import Index from "@/pages/Registrierung"; // Import Layout component
 
@@ -24,20 +24,11 @@ function App() {
         <ChakraProvider>
             <AuthentifizierungProvider>
                 <Routes>
-                    <Route path="/">
-
-                        <Route
-                            index
-                            element={
-                                isLoggedIn() ? (
-                                    <HomePage/>
-                                ) : (
-                                    <Navigate to="/login"/>
-                                )
-                            }
-                        />
-                    </Route>
-                    <Route path="/login" element={<Login/>}/>
+                    <Route
+                        path="/"
+                        element={isLoggedIn() ? <HomePage/> : <Navigate to="/Login"/>}
+                    />
+                    <Route path="/Login" element={isLoggedIn()? <Navigate to=""/>:<Login/>}/>
                     <Route path="/register" element={<Index/>}/>
                     <Route path="/current-price" element={<Aktien/>}/>
                     <Route path="/portfolio" element={<Portfolio/>}/>

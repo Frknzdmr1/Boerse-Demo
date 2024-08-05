@@ -5,9 +5,9 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 import {Stock} from "@/components/Portfolio";
 
 const dummyPortfolio = [
-    { symbol: 'AAPL', menge: 5 },
-    { symbol: 'COKE', menge: 4 },
-    { symbol: 'IBM', menge: 3 }
+    { symbol: 'AAPL', aktuellerGesamtWert: 1903.31 },
+    { symbol: 'COKE', aktuellerGesamtWert: 4*1274.29 },
+    { symbol: 'IBM', aktuellerGesamtWert: 3*189.12}
     //{ symbol: 'NVDA', menge: 6 }
 
 ];
@@ -67,7 +67,7 @@ const MyWallet = () => {
                 <PieChart>
                     <Pie
                         data={portfolio.portfolioAktien}
-                        dataKey="menge"
+                        dataKey="aktuellerGesamtWert"
                         nameKey="symbol"
                         cx="50%"
                         cy="50%"
