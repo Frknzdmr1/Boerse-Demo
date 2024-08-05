@@ -1,7 +1,9 @@
 package de.brightslearning.boersebackend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -10,6 +12,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "aktien")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Aktie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

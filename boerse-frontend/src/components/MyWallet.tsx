@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Text, Heading, Spinner } from '@chakra-ui/react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Portfolio, {Stock} from "@/components/Portfolio";
+import {Stock} from "@/components/Portfolio";
 
 const dummyPortfolio = [
     { symbol: 'AAPL', menge: 5 },
