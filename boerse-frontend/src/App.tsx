@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {ChakraProvider} from '@chakra-ui/react';
 import HomePage from '@/pages/HomePage';
 import Aktien from '@/components/Aktien';
 import Portfolio from '@/components/Portfolio';
@@ -12,23 +12,23 @@ import MyWallet from '@/components/MyWallet';
 import Layout from '@/components/Layout'; // Import Layout component
 import LearningPage from '@/components/LearningPage';
 import Error from "@/components/Error";
-import { AuthentifizierungProvider } from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
-import { isLoggedIn } from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
+import {AuthentifizierungProvider} from "@/pages/Login/AuthUtils/AuthentifizierungsProvider";
+import {isLoggedIn} from "@/pages/Login/AuthUtils/AuthentifizierungsUtils";
 import Login from "@/pages/Login/Login";
 import Registrierung from "@/pages/Registrierung/Registrierung"; // Import Layout component
 
 function App() {
-     // Replace with actual user ID
+    // Replace with actual user ID
 
     return (
         <ChakraProvider>
             <AuthentifizierungProvider>
                 <Routes>
                     <Route path="/">
-                        <Route index element={isLoggedIn() ? <HomePage/> : <Navigate to={"/Login"} />}/>
+                        <Route index element={isLoggedIn() ? <HomePage/> : <Navigate to={"/Login"}/>}/>
                     </Route>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Registrierung/>} />
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Registrierung/>}/>
                     <Route path="/current-price" element={<Aktien/>}/>
                     <Route path="/portfolio" element={<Portfolio/>}/>
                     <Route path="/aktuelles" element={<AktuellesPage/>}/>

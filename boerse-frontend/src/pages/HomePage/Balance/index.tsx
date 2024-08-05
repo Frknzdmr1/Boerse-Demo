@@ -163,7 +163,7 @@ const Balance: React.FC<BalanceProps> = ({balance}) => {
                         value={portfolioValue}
                         currency="€"
                     />
-                    <Percent className="ml-1 text-title-1s" value={portfolioChange}/>
+                    <Percent className="ml-1 text-title-1s" value={Number(portfolioChange.toFixed(2))}/>
                 </Box>
                 <Box className="h-[14rem] -mb-2">
                     <ResponsiveContainer width="100%" height="100%">

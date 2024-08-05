@@ -18,27 +18,25 @@ const Login: React.FC = () => {
     const {setAktuellerBenutzer} = useContext(kontext);
     const navigate = useNavigate();
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const data = await AuthentifizierungsUtils.login(username, password);
-            const token = data.accessToken
-            let name = ""
-            if (AuthentifizierungsUtils.getBenutzernameFromToken(token) !== null) {
-                name = AuthentifizierungsUtils.getBenutzernameFromToken(token)!;
-
-            }
-            setAktuellerBenutzer!({
-                id: AuthentifizierungsUtils.getUserIdFromToken(token)!,
-                benutzername: name
-            });
-            navigate("/", {
-                replace: true
-            });
-        } catch (error) {
-            console.error('Login failed:', error);
+const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+        const data = await AuthentifizierungsUtils.login(username, password);
+        const token = data.accessToken;
+        let name = "";
+        if (AuthentifizierungsUtils.getBenutzernameFromToken(token) !== null) {
+            name = AuthentifizierungsUtils.getBenutzernameFromToken(token)!;
         }
-    };
+        setAktuellerBenutzer!({
+            userId: AuthentifizierungsUtils.getUserIdFromToken(token)!,
+            benutzername: name
+        });
+        navigate("/"); // Hier wird zur Homepage navigiert
+    } catch (error) {
+        console.error('Login fehlgeschlagen:', error);
+    }
+};
+
 
     const handleReqistrierung = () => {
         <NavLink to={"http://localhost:5173/register"}/>
@@ -86,7 +84,7 @@ const Login: React.FC = () => {
                     </div>
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Hast du kein Konto?{' '}
-                        < button type={"button"}  onClick={handleReqistrierung}
+                        < button type={"button"} onClick={handleReqistrierung}
                                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Zur
                             Registrierung
                         </button>
